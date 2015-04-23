@@ -26,19 +26,18 @@
 #   radial.py: Contains the radial basis functions 
 #   halton.py: Used to create a low discrepancy node distribution
 import sys
-sys.path.append('modules')
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-from spectral.radial import mq 
-from spectral.radial import RBFInterpolant 
-from spectral.halton import Halton
+from modules.radial import mq 
+from modules.radial import RBFInterpolant 
+from modules.halton import Halton
 from shapely.geometry import Polygon
 from shapely.geometry import Point
 from shapely.geometry import LineString
 from descartes import PolygonPatch
-from misc import Timer
-from misc import timestamp
+from modules.misc import Timer
+from modules.misc import timestamp
 import pickle
 import logging
 
