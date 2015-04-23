@@ -1,0 +1,44 @@
+#!/usr/bin/env python
+import sys
+sys.path.append('modules')
+sys.path.append('exec')
+import project_plot
+import pickle
+import sys
+import SeisRBF
+from spectral.halton import Halton
+import matplotlib.pyplot as plt
+H = Halton(3)
+interp_nodes = 1000
+name = sys.argv[1]
+f = open('output/%s/%s.pkl' % (name,name),'r')
+obj = pickle.load(f)
+
+nodes = obj['nodes']
+surface_nodes = obj['surface_nodes']
+N = len(nodes)
+D = obj['domain']
+soln_itp = obj['interpolant']
+mu_itp = obj['mu']
+rho_itp = obj['rho']
+lam_itp = obj['lambda']
+time = obj['time']
+
+xinterp = project.pick_nodes(H,D,lambda x:1,interp_nodes)
+
+anim1 = project_plot.animate_displacement(D,
+                                          xinterp,
+                                          zip(soln_itp[::2],time[::2]))
+
+anim2 = project_plot.animate_displacement_magnitude(D,
+                                       nodes,
+                                       soln_itp[::10],
+                                       time[::10])
+fig = project_plot.plot_seismogram(zip(soln_itp,time),
+                                   nodes[10])
+fig = project_plot.plot_record_section(zip(soln_itp,time),
+                                       surface_nodes[:N//2])
+
+fig = project_plot.plot_interpolant(D,mu_itp,nodes)
+
+plt.show()
