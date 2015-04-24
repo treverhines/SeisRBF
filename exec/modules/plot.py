@@ -198,7 +198,7 @@ def plot_record_section(soln,x_list):
     t_list = np.array(t_list)
     u_list = np.array(u_list)
     v_list = np.array(v_list)
-    ax.plot(theta+u_list,t_list/60.0,'k')
+    ax.plot(theta+0.1*u_list,t_list/60.0,'k')
   
   return fig
 

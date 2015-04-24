@@ -1,0 +1,12 @@
+{
+"nodes":500,
+"boundary_nodes":100,
+"max_time":25.0,
+"time_step":1.0,
+"save_interval":10,
+"epsilon":1.0,
+"epicenter":[0.0,5000.0],
+"couple_distance":2000.0,
+"moment_tensor":[1.0e21,1.0e21,0.0],
+"material_file":"material/PREM.txt"
+}
