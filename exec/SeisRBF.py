@@ -287,11 +287,28 @@ def nearest(x):
   nearest_dist = np.min(A,1)
   nearest_idx = np.argmin(A,1)
   if any(nearest_dist < tol):
-    logger.WARNING('at least one node is a duplicate or very close to '
+    logger.warning('at least one node is a duplicate or very close to '
                    'another node')
 
   return nearest_dist,nearest_idx
 
+
+def pick_surface_nodes(H,S,R,N):
+  count = 0
+  tpick = np.zeros(0)
+  out = np.zeros((0,2))
+  while count < N:
+    halton_sample = H(4*N)  
+    xsample = S(halton_sample[:,0])
+    accept_bool = R(xsample) > halton_sample[:,1] 
+    accept = np.nonzero(accept_bool)[0]
+    accept = accept[:(N-count)]
+    tpick = np.concatenate((tpick,halton_sample[accept,0]))
+    out = np.vstack((out,xsample[accept]))
+    count += len(accept)
+
+  sortidx = np.argsort(tpick)
+  return out[sortidx,:]    
 
 def pick_nodes(H,D,R,N):
   '''
@@ -389,7 +406,6 @@ def initial_save(name,
   f['rho'] = np.asarray(rho)
   f['time'] = np.asarray(time_steps)
   f['alpha'] = np.zeros((len(time_steps),)+np.shape(nodes))
-  f['last_update'] = 0
   f.close()
   return
 
@@ -424,7 +440,6 @@ def main(args):
   H = Halton(dim=3)
 
   # define boundary nodes
-  # NOTE: this should become a user defined parameter
   t = np.linspace(0,1,args.boundary_nodes+1)[:-1]
   surface_nodes = boundary(t)
   surface_idx = range(node_count,len(surface_nodes)+node_count)
@@ -448,8 +463,12 @@ def main(args):
   # defined by the boundary nodes. This is needed for a stable 
   # solution.  The buffer is the minimum of the distances between 
   # adjacent surface nodes
-  buffer_size = np.max(nearest(surface_nodes)[0])
-  D = D.buffer(-buffer_size)
+  nearest_surface_node = nearest(surface_nodes)[0]
+  for p,n in zip(surface_nodes,nearest_surface_node):
+    pbuff = Point(p).buffer(n)
+    D = D.difference(pbuff)
+
+  #D = D.buffer(-buffer_size)
   assert D.is_valid
 
   # Find interior nodes that are within the domain and adhere to the
@@ -458,7 +477,7 @@ def main(args):
   interior_idx = range(node_count,len(interior_nodes)+node_count)
   total_nodes = np.vstack((total_nodes,interior_nodes))
   node_count += len(interior_nodes)
-  D = D.buffer(buffer_size/2.0)
+  #D = D.buffer(buffer_size)
   T.toc()
 
   T.tic('Material Properties')
@@ -469,22 +488,23 @@ def main(args):
   depth = prem_table[:,0] # km
   P_vel = prem_table[:,1]*1e-3 # km/s
   S_vel = prem_table[:,2]*1e-3 # km/s
-  rho = prem_table[:,3]*1e6 # kg/km**3
+  rho = prem_table[:,3]*1e9 # kg/km**3
 
   # lame parameters
   mu = (S_vel**2*rho) # kg/km*s**2
   lam = (P_vel**2*rho - 2*mu) # kg/km*s**2
+  
 
   # create interpolants. The interpolants are 1D with respect to 
   # depth
-  eps = 5*args.epsilon/nearest(depth)[0]
+  eps = args.epsilon/nearest(depth)[0]
   lam_itp = RBFInterpolant(depth,eps,value=lam)  
   mu_itp = RBFInterpolant(depth,eps,value=mu)  
   rho_itp = RBFInterpolant(depth,eps,value=rho)  
   
   # Convert the 1D interpolants to 2D cartesian interpolants
   r = np.sqrt(np.sum(total_nodes**2,1))
-  eps = 5*args.epsilon/nearest(total_nodes)[0]
+  eps = args.epsilon/nearest(total_nodes)[0]
   lam_itp = RBFInterpolant(total_nodes,eps,value=lam_itp(r))
   mu_itp = RBFInterpolant(total_nodes,eps,value=mu_itp(r))
   rho_itp = RBFInterpolant(total_nodes,eps,value=rho_itp(r))
@@ -499,7 +519,7 @@ def main(args):
   # Form interpolation, acceleration, and boundary condition matrix
   G = interpolation_matrix(total_nodes,total_nodes,eps)
   A = acceleration_matrix(total_nodes,total_nodes,eps,lam_itp,mu_itp,rho_itp)
-  B = traction_matrix(surface_nodes,surface_normals,total_nodes,eps,lam_itp,mu_itp)/1e8
+  B = traction_matrix(surface_nodes,surface_normals,total_nodes,eps,lam_itp,mu_itp)
   G[surface_idx,:,:,:] = B
   T.toc()
 
@@ -559,16 +579,14 @@ def main(args):
       u,v,a,alpha = leapfrog(F,u,v,a,args.time_step,
                              F_args=(G,A,f,surface_idx,0.0))
       alpha_list += [alpha]
-      # store solution
 
-    if (itr+1)%args.save_interval==0: 
-      print(np.shape(alpha_list))
+    if ((itr+1)%args.save_interval==0) | ((itr+1) == len(time_steps)): 
       update_save(name,range(last_save,itr+1),alpha_list)
       last_save = itr+1
       alpha_list = []
 
   # final save
-  update_save(name,range(last_save,itr+1),alpha_list)
+  #update_save(name,range(last_save,itr+1),alpha_list)
   T.toc()
 
   logger.info('view results with exec/PlotSeisRBF.py %s' % name)

@@ -6,7 +6,7 @@ import numpy as np
 from shapely.geometry import LineString
 
 def initial_conditions(x):
-  '''                                                                                                              
+  '''                            
   Initial displacement an velocity field.          
   '''
   N = len(x)
@@ -16,20 +16,20 @@ def initial_conditions(x):
 
 
 def source_time_function(t):
-  '''                                                                                                              
-  a function describing the time history of the force term     
-                                                           
+  '''         
+  a function describing the time history of the force 
+
   This function should integrate to 1 on the interval 0 to inf     
   '''
   if t < 20.0:
-    return 0.1
+    return 0.05
 
   else:
     return 0.0
 
 
 def boundary(t):
-  '''                                                                                                              
+  '''   
   parameterized boundary function   
                                
   Parameters         
@@ -42,8 +42,8 @@ def boundary(t):
                              
   '''
   p = np.linspace(0,2*np.pi,1000)
-  x = 6371*np.sin(p)
-  y = 6371*np.cos(p)
+  x =  6371*np.sin(p)
+  y = -6371*np.cos(p)
   curve = LineString(zip(x,y))
 
   if hasattr(t,'__iter__'):
@@ -70,23 +70,27 @@ def node_density(x):
     length N array of node densities between 0 and 1       
              
   '''
-  layer_depths = [[np.inf,6350],
-                  [6350,6000],
-                  [6000,5600],
-                  [5600,3800],
-                  [3800,3200],
-                  [3200,1500],
-                  [1500,1000],
-                  [1000,0]]
+  layer_depths = [[np.inf,5800],
+                  [5800,5400],
+                  [5400,3500],
+                  [3500,3100],
+                  [3100,1200],
+                  [1200,800],
+                  [800,0]]
+
+  #layer_depths = [[np.inf,5600],
+  #                [5600,3300],
+  #                [3300,1000],
+  #                [1000,0000]]
 
   layer_density = [1.0,
                    1.0,
-                   1.0,
-                   0.4,
+                   0.6,
                    1.0,
                    0.4,
                    0.4,
                    0.4]
+
 
   R = np.sqrt(np.sum(x**2,1))
   out = np.zeros(len(R))
