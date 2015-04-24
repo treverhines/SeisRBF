@@ -104,12 +104,10 @@ def source(x,x_o,t,M,d):
   user defined source_time_function to produce the force at position
   x and time t
   '''
-  # I want a source that is equivalent to a Mw8 earthquake.  This is
-  # 10^21 Nm moment
-  out = M[0]*force_couple(x,x_o,0,0,d)*1e-6
-  out += M[1]*force_couple(x,x_o,1,1,d)*1e-6
-  out += M[2]*force_couple(x,x_o,0,1,d)*1e-6
-  out += M[2]*force_couple(x,x_o,1,0,d)*1e-6
+  out = M[0]*force_couple(x,x_o,0,0,d)*1e-6/d
+  out += M[1]*force_couple(x,x_o,1,1,d)*1e-6/d
+  out += M[2]*force_couple(x,x_o,0,1,d)*1e-6/d
+  out += M[2]*force_couple(x,x_o,1,0,d)*1e-6/d
   return out*source_time_function(t)
 
 
