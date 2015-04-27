@@ -90,20 +90,19 @@ complicated geometries can arise in regional scale seismology problems
 where topography may need to be considered.
 
 \section*{Problem Formulation}
-If we assume that the magnitude of seismic waves are infinitesimally
-small compared to the length scale of the problem domain then we can
-express displacements, $\boldsymbol{u}$, at any point $\boldsymbol{x}$ as 
+We can apply Newton's second law of motion to an infinitesimal parcel
+within a continuum to obtain displacements, $\boldsymbol{u}$,
+at any point $\boldsymbol{x}$ in the continuum as
 \begin{equation}\label{MomentumEquation}
   \rho\frac{\partial^2 u_i}{\partial t^2}  = \frac{\partial \tau_{ij}}{\partial x_j} + f_i,
 \end{equation}
 where $\boldsymbol{\tau}$ and $\boldsymbol{f}$ are the stress tensor
-and body force per unit volume acting on point $\boldsymbol{x}$, respectively, and
-$\rho$ is the density at point $\boldsymbol{x}$. Note that I have
-adopted Einstein notation where summations are implied by repeated
-indices.  Eq. (\ref{MomentumEquation}) is obtained by applying
-Newton's second law of motion to an infinitesimal parcel within a
-continuum.  We can express eq. (\ref{MomentumEquation}) in terms of
-$\boldsymbol{u}$ by using the definition of infinitesimal strain,
+and body force per unit volume acting on point $\boldsymbol{x}$,
+respectively, and $\rho$ is the density at point
+$\boldsymbol{x}$. Note that I have adopted Einstein notation where
+summations are implied by repeated indices.  We can express
+eq. (\ref{MomentumEquation}) in terms of $\boldsymbol{u}$ by using the
+definition of infinitesimal strain,
 \begin{equation}\label{Strain}
   \varepsilon_{ij} = \frac{1}{2}\left(\frac{\partial u_j}{\partial x_i} + 
                                 \frac{\partial u_i}{\partial x_j}\right),
@@ -137,7 +136,7 @@ We impose free-surface boundary conditions, which means that
 \begin{equation}\label{BoundaryCondition}
   \boldsymbol{\tau}\cdot\boldsymbol{\hat{n}} = 0
 \end{equation}
-for all $\boldsymbol{x}$ on the surface of the Earth which have
+for all $\boldsymbol{x}$ on the surface of the Earth, which have
 surface normal vectors $\boldsymbol{\hat{n}}$.  We can write the
 boundary conditions on $\boldsymbol{u}$ more explicitly as
 \begin{equation}\label{BoundaryConditionExplicit}
@@ -155,15 +154,15 @@ wave propagation then eq. (\ref{DiffEq}) becomes
 \begin{equation}\label{1DS}
   \frac{\partial^2 u}{\partial t^2} = \frac{\lambda + 2\mu}{\rho}\frac{\partial^2 u}{\partial x^2},
 \end{equation}
-where waves propagate at the P-wave velocity, $\sqrt{(\lambda +
+where waves propagate at the P wave velocity, $\sqrt{(\lambda +
   2\mu)/\rho}$. If displacements are perpendicular to the direction of
 wave propagation then eq. (\ref{DiffEq}) reduces to
 \begin{equation}\label{1DP}
   \frac{\partial^2 u}{\partial t^2} = \frac{\mu}{\rho}\frac{\partial^2 u}{\partial x^2},
 \end{equation}
-where waves propagate at the S-wave velocity, $\sqrt{\mu/\rho}$.  
+where waves propagate at the S wave velocity, $\sqrt{\mu/\rho}$.  
 
-When solving eq. (\ref{DiffEq}), We assume the Earth is initially
+When solving eq. (\ref{DiffEq}), we assume the Earth is initially
 stationary and that all displacements are caused by an earthquake.
 Earthquakes are a sudden dislocation in the displacement field along a
 fault plane and so it seems reasonable that earthquakes should be
@@ -172,7 +171,7 @@ conditions on a prescribed fault plane.  However, imposing a
 dislocation in the displacement field would undoubtedly cause
 numerical troubles.  Fortunately, we can instead represent an
 earthquake as a collection of slightly offset point force couples,
-$\boldsymbol{F}^{(i,j)}$ (\citet{AR2002}).  All nine unit force
+$\boldsymbol{F}^{(i,j)}$ \citep{AR2002}.  All nine unit force
 couples needed to represent a dislocation in three dimensional space
 are shown in figure 1. Approximating a dislocation as point force
 couples is reasonable if one is concerned with displacements far away
@@ -185,7 +184,7 @@ components of the moment tensor are
 \begin{equation}\label{MomentTensorComponents}
   M_{ij} = |\boldsymbol{F}^{(i,j)}|d,
 \end{equation}
-where d is the offset between the force couples, which would ideally
+where $d$ is the offset between the force couples, which would ideally
 be infinitesimally small.  To give the moment tensor more tangible
 meaning, we can consider an isotropic compression source, such as a
 subsurface explosion, where the moment tensor representing that source
@@ -204,7 +203,7 @@ simulation, we imposed an earthquake with moment tensor
   \end{vmatrix} N m,
 \end{equation}
 which is equivalent to a Mw7.3 earthquake on a fault that is aligned
-with either the first or second coordinate axes.  
+with either the first or second coordinate axis.  
 
 We can represent the body force density for each force couple (without
 implied summations) as
@@ -252,10 +251,10 @@ timescale of seismic wave propagation.
 \end{figure}
 
 \section*{Spectral Discretization}
-In this paper We will assume, for computational tractability but
-without loss of generality, that the domain is a two dimensional
-cross-section of the Earth and displacements are only in the plane of
-that cross-section.  After a little algebra, eq. (\ref{DiffEq}) can then be
+We will assume, for computational tractability but without loss of
+generality, that the domain is a two dimensional cross-section of the
+Earth and displacements are only in the plane of that cross-section.
+After expanding the summation notation, eq. (\ref{DiffEq}) can then be
 written as
 \begin{equation}
 \begin{vmatrix}
@@ -311,7 +310,7 @@ one-dimensional problems \citep{D2002}.  This suggests that a wide
 range of values for $\epsilon$ should produce reasonably accurate
 results because either end-member is a perfectly valid means of
 interpolation.  This is in contrast to using RBFs that decay to zero
-as $|\boldsymbol{x}| \to \infty$, where the interpolant for $\epsilon
+as $|\boldsymbol{x - x_o}| \to \infty$, where the interpolant for $\epsilon
 \to \infty$ is essentially useless.  We follow the common practice of
 making $\epsilon$ for each RBF proportional to the distance to the
 nearest RBF center.  We did not rigorously search for an optimal
@@ -350,8 +349,8 @@ where $\boldsymbol{G}$ is given by
 \end{vmatrix}
 \end{equation}
 and we are no longer explicitly writing the time and space dependence.
-We can then express acceleration in terms of the spectral coefficients
-$\boldsymbol{\alpha}$ and $\boldsymbol{\beta}$ as
+We can then express acceleration in terms of the spectral
+coefficients, $\boldsymbol{\alpha}$ and $\boldsymbol{\beta}$, as
 \begin{equation}\label{Acceleration}
 \begin{vmatrix}
   \partial^2 u_1/\partial t^2\\
@@ -365,7 +364,7 @@ $\boldsymbol{\alpha}$ and $\boldsymbol{\beta}$ as
 \begin{vmatrix}
   f_1\\
   f_2
-\end{vmatrix}.
+\end{vmatrix},
 \end{equation}
 where
 \begin{equation}
@@ -379,7 +378,7 @@ where
  \partial_2\left(\lambda\partial_1 \boldsymbol{\phi}\right)&
  \partial_2\left((\lambda + 2\mu)\partial_2 \boldsymbol{\phi}\right) +  
  \partial_1\left(\mu\partial_1 \boldsymbol{\phi}\right) 
-\end{vmatrix}. 
+\end{vmatrix}.
 \end{equation}
 The boundary conditions can also be expressed in terms of the spectral
 coefficients as
@@ -411,7 +410,7 @@ where
 At this point, all the information in $\boldsymbol{G}$,
 $\boldsymbol{H}$, $\boldsymbol{B}$, and $\boldsymbol{f}$ are given by
 the problem description or are user defined variables.  Finding the
-spectral coefficients for $\boldsymbol{u}$ is then straight-forward.
+spectral coefficients for $\boldsymbol{u}$ is then straightforward.
 We perform the time integration with a leapfrog method and our
 procedure for solving eq. (\ref{DiffEq}) is as follows:
 \begin{enumerate}
@@ -511,45 +510,67 @@ Figures 2, 3 or 4.
 \end{algorithmic}
 \end{algorithm}
 \section*{Results}
-Our numerical solution to eq. (\ref{DiffEq}) is shown in figure 2.  
+Our numerical solution to eq. (\ref{DiffEq}) is shown in figures 2-10.
+The most prominent feature in our solution are the Raleigh waves which
+travel along the surface and have decaying amplitude with depth.  The
+fastest traveling waves are the P waves which have only a faint
+signature.  We can also be assured that the material properties are
+properly implemented because S waves, which have displacements
+parallel to the wave front, do not enter the core because it has a
+shear wave velocity of zero.
 
+It is also worth noting that the solution has symmetry about the
+vertical axis.  This symmetry is no suprise and we have attemted to
+solve eq. (\ref{DiffEq}) on only half the domain.  However, we have
+found that solutions using RBFs are incredibly sensitive to corners in
+the domain and our solution quickly went unstable after a few time
+steps.
 
+We note that the magnitude of displacements in our solution is far
+larger than what we would reasonably expect.  We believe this to be a
+bug in our program that is related to unit conversions and the actual
+solution should be different by only a constant factor.
 
-When
+We can also verify the accuracy of our solution by ensuring that it is 
+symmetric
 
-We set the distance between the
-force couples, $d$, to 500 km.    The value of $d$ is 
+\begin{figure}
+\includegraphics[scale=0.45]{figures/100s}
+\centering
+\caption{Solution for displacements at 100 seconds after an earthquake. Color
+  indicates the magnitude of displacement and vectors indicate
+  direction}
+\end{figure}
+\begin{figure}
+\includegraphics[scale=0.45]{figures/200s}
+\centering
+\caption{Solution for displacements at 200 seconds after an earthquake}
 
-   
-  
+\end{figure}
+\begin{figure}
+\includegraphics[scale=0.45]{figures/300s}
+\centering
+\caption{Solution for displacements at 300 seconds after an earthquake}
 
- We use 8000 collocation points and solve for displacements
+\end{figure}
+\begin{figure}
+\includegraphics[scale=0.45]{figures/400s}
+\centering
+\caption{Solution for displacements at 400 seconds after an earthquake}
 
+\end{figure}
+\begin{figure}
+\includegraphics[scale=0.45]{figures/500s}
+\centering
+\caption{Solution for displacements at 500 seconds after an earthquake}
+\end{figure}
 
-\section*{Complications}
-  Representing an infinitesimally small source is difficult
-
-  Corners suck
-
-  Need a buffer
-  
-  cfl criteria holds strong
-
-  consider iterative solvers
-
-  Seems to be stable for Poisson solids
-
-  
-\section*{Additional Notes}
-  Domain Geometry
-  
-  
-
-  Seems to be stable only for Poisson solids
-
-  Code can be found on Github
-
-\section*{Acknowledgments}
+\section*{Additional notes}
+  All the software that I have written to produce the results shown in
+  this paper are included below.  The software (with eventual bug
+  fixes) can also be found at https://github.com/treverhines/SeisRBF
+  My software uses packages which can be found in the Anaconda Python
+  distribution from Continuum Analytics.  
 
 %\pythonscript{Lab03_snippet}{Lab03.py} 
 

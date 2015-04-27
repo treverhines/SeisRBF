@@ -63,6 +63,8 @@ def plot_interpolant(D,interp,x,title='',dim=1,ax=None,scatter=False):
 
   return ax
 
+def plot_record_section()
+  pass
 
 parser = argparse.ArgumentParser(
            description='''Plots results of SeisRBF''')
@@ -86,7 +88,6 @@ rho_itp = RBFInterpolant(nodes,eps,value=f['rho'][...])
 lam_itp = RBFInterpolant(nodes,eps,value=f['lambda'][...])
 time = f['time'][...]
 
-
 D = Polygon(surface_nodes)
 N = len(nodes)
 
@@ -104,9 +105,6 @@ for t in args.time:
 ax = plot_interpolant(D,rho_itp,nodes,title='density (kg/m**3)',dim=1,scatter=True)
 ax = plot_interpolant(D,S_vel,nodes,title='S wave velocity (m/s)',dim=1,scatter=True)
 ax = plot_interpolant(D,P_vel,nodes,title='P wave velocity (m/s)',dim=1,scatter=True)
-
-
-
 
 #fig,ax = plot_displacement_magnitude(D,nodes,eps,alpha[timeidx,:,:],title='time: %s s' % time[timeidx])
 '''
