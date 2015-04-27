@@ -9,24 +9,32 @@ def initial_conditions(x):
   '''                            
   Initial displacement an velocity field.          
   '''
+  sig = 2000.0
   N = len(x)
   u = np.zeros(np.shape(x))
+  #c = (x[:,0]**2 + x[:,1]**2)
+  #a = 1.0/(2*sig**2*np.pi)
+  #r = np.sqrt(x[:,0]**2 + x[:,1]**2)
+  #theta = np.arctan2(x[:,1],x[:,0])
+  # compressional initial
+  #u[:,0] = np.exp(-(r/sig)**2)*np.cos(theta)
+  #u[:,1] = np.exp(-(r/sig)**2)*np.sin(theta)
+  #u[:,0] = np.exp(-(r/sig)**2)*np.cos(theta+np.pi/2)
+  #u[:,1] = np.exp(-(r/sig)**2)*np.sin(theta+np.pi/2)
   v = np.zeros(np.shape(x))
   return u,v
-
 
 def source_time_function(t):
   '''         
   a function describing the time history of the force 
 
-  This function should integrate to 1 on the interval 0 to inf     
+  This function should be 1 as t goes to inf     
   '''
-  if t < 20.0:
-    return 0.05
+  if t < 2000.0:
+    return 1.0
 
   else:
     return 0.0
-
 
 def boundary(t):
   '''   
@@ -41,11 +49,11 @@ def boundary(t):
     coordinates of the boundary 
                              
   '''
+  
   p = np.linspace(0,2*np.pi,1000)
-  x =  6371*np.sin(p)
-  y = -6371*np.cos(p)
+  x =  6371000*np.sin(p) # meters
+  y = -6371000*np.cos(p) # meters
   curve = LineString(zip(x,y))
-
   if hasattr(t,'__iter__'):
     out = np.zeros((len(t),2))
     for itr,val in enumerate(t):
@@ -71,25 +79,22 @@ def node_density(x):
              
   '''
   layer_depths = [[np.inf,5800],
-                  [5800,5400],
-                  [5400,3500],
-                  [3500,3100],
-                  [3100,1200],
-                  [1200,800],
-                  [800,0]]
+                  [5800,5000],
+                  [5000,3700],
+                  [3700,3300],
+                  [3300,1500],
+                  [1500,1100],
+                  [1100,0]]
 
-  #layer_depths = [[np.inf,5600],
-  #                [5600,3300],
-  #                [3300,1000],
-  #                [1000,0000]]
+  layer_depths = 1000*np.array(layer_depths) # meters
 
   layer_density = [1.0,
                    1.0,
-                   0.6,
+                   0.5,
                    1.0,
-                   0.4,
-                   0.4,
-                   0.4]
+                   0.7,
+                   0.7,
+                   0.7]
 
 
   R = np.sqrt(np.sum(x**2,1))

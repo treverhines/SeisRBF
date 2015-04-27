@@ -1,0 +1,56 @@
+#!/usr/bin/env python
+''' 
+user defined functions for SeisRBF.py
+'''
+import numpy as np
+
+def initial_conditions(x):
+  '''                                                                                                              
+  Initial displacement an velocity field.          
+  '''
+  N = len(x)
+  u = np.zeros((N,DIM))
+  v = np.zeros((N,DIM))
+  return u,v
+
+
+def source_time_function(t):
+  '''                                                                                                              
+  a function describing the time history of the force term     
+                                                           
+  This function should integrate to 1 on the interval 0 to inf     
+  '''
+  if t < 20.0:
+    return 0.1
+
+  else:
+    return 0.0
+
+
+def boundary(t):
+  '''                                                                                                              
+  parameterized boundary function   
+                               
+  Parameters         
+  ----------             
+    t: array with values between 0 and 1     
+                                 
+  Returns               
+  -------               
+    coordinates of the boundary 
+                             
+  '''
+  p = np.linspace(0,2*np.pi,1000)
+  x = R_EARTH*np.sin(p)
+  y = R_EARTH*np.cos(p)
+  curve = LineString(zip(x,y))
+
+  if hasattr(t,'__iter__'):
+    out = np.zeros((len(t),2))
+    for itr,val in enumerate(t):
+      out[itr] = np.array(curve.interpolate(val,normalized=True))
+
+  else:
+    out = np.array(curve.interpolate(t,normalized=True))
+
+  return out

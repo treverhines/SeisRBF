@@ -22,7 +22,7 @@ def plot_interpolant(D,interp,x,title='',dim=1,ax=None,scatter=False):
 
   
   buff = 400.0
-  N = 200
+  N = 150
   minx = np.min(x[:,0])
   maxx = np.max(x[:,0])
   miny = np.min(x[:,1])
@@ -59,7 +59,7 @@ def plot_interpolant(D,interp,x,title='',dim=1,ax=None,scatter=False):
     cbar = plt.colorbar(im)
 
   if dim == 2:
-    ax.quiver(x[:,0],x[:,1],interp(x)[:,0],interp(x)[:,1],color='gray')
+    ax.quiver(x[::3,0],x[::3,1],interp(x)[::3,0],interp(x)[::3,1],color='gray',scale=4000.0,zorder=20)
 
   return ax
 
@@ -68,7 +68,7 @@ parser = argparse.ArgumentParser(
            description='''Plots results of SeisRBF''')
 
 parser.add_argument('name',type=str)
-parser.add_argument('time',type=float)
+parser.add_argument('time',nargs='+',type=float)
 
 args = parser.parse_args()
 H = Halton(3)
@@ -83,26 +83,27 @@ interior_nodes = nodes[f['interior_index'][...]]
 alpha = f['alpha'][...]
 mu_itp = RBFInterpolant(nodes,eps,value=f['mu'][...])
 rho_itp = RBFInterpolant(nodes,eps,value=f['rho'][...])
-rho_scaled_itp = RBFInterpolant(nodes,eps,value=f['rho'][...]/1e9)
 lam_itp = RBFInterpolant(nodes,eps,value=f['lambda'][...])
 time = f['time'][...]
-timeidx = np.argmin(np.abs(time - args.time))
+
 
 D = Polygon(surface_nodes)
 N = len(nodes)
 
-soln = RBFInterpolant(nodes,eps,alpha=alpha[timeidx,:,:])
-mag = RBFInterpolant(nodes,eps,value=np.sqrt(np.sum(soln(nodes)**2,1)))
 S_vel = RBFInterpolant(nodes,eps,value=np.sqrt(np.abs(mu_itp(nodes))/rho_itp(nodes)))
 P_vel = RBFInterpolant(nodes,eps,value=np.sqrt((lam_itp(nodes)+2*mu_itp(nodes))/rho_itp(nodes)))
+for t in args.time:
+  timeidx = np.argmin(np.abs(time - t))
+  soln = RBFInterpolant(nodes,eps,alpha=alpha[timeidx,:,:])
+  mag = RBFInterpolant(nodes,eps,value=np.sqrt(np.sum(soln(nodes)**2,1)))
+  ax = plot_interpolant(D,mag,nodes,title='displacement (meters) at time %s seconds' % time[timeidx],dim=1)
+  ax = plot_interpolant(D,soln,nodes,dim=2,ax=ax)
+  #ax = plot_interpolant(D,lam_itp,nodes,title='second lame parameter (lambda)',dim=1,scatter=True)
+  #ax = plot_interpolant(D,mu_itp,nodes,title='first lame parameter (mu)',dim=1,scatter=True)
 
-ax = plot_interpolant(D,mag,nodes,title='displacement (meters) at time %s seconds' % time[timeidx],dim=1)
-ax = plot_interpolant(D,soln,nodes,dim=2,ax=ax)
-#ax = plot_interpolant(D,lam_itp,nodes,title='second lame parameter (lambda)',dim=1,scatter=True)
-#ax = plot_interpolant(D,mu_itp,nodes,title='first lame parameter (mu)',dim=1,scatter=True)
-ax = plot_interpolant(D,rho_scaled_itp,nodes,title='density (kg/m**3)',dim=1,scatter=True)
-ax = plot_interpolant(D,S_vel,nodes,title='S wave velocity (km/s)',dim=1,scatter=True)
-ax = plot_interpolant(D,P_vel,nodes,title='P wave velocity (km/s)',dim=1,scatter=True)
+ax = plot_interpolant(D,rho_itp,nodes,title='density (kg/m**3)',dim=1,scatter=True)
+ax = plot_interpolant(D,S_vel,nodes,title='S wave velocity (m/s)',dim=1,scatter=True)
+ax = plot_interpolant(D,P_vel,nodes,title='P wave velocity (m/s)',dim=1,scatter=True)
 
 
 

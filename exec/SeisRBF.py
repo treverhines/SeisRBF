@@ -104,10 +104,10 @@ def source(x,x_o,t,M,d):
   user defined source_time_function to produce the force at position
   x and time t
   '''
-  out = M[0]*force_couple(x,x_o,0,0,d)*1e-6/d
-  out += M[1]*force_couple(x,x_o,1,1,d)*1e-6/d
-  out += M[2]*force_couple(x,x_o,0,1,d)*1e-6/d
-  out += M[2]*force_couple(x,x_o,1,0,d)*1e-6/d
+  out = M[0]*force_couple(x,x_o,0,0,d)/d
+  out += M[1]*force_couple(x,x_o,1,1,d)/d
+  out += M[2]*force_couple(x,x_o,0,1,d)/d
+  out += M[2]*force_couple(x,x_o,1,0,d)/d
   return out*source_time_function(t)
 
 
@@ -291,23 +291,6 @@ def nearest(x):
   return nearest_dist,nearest_idx
 
 
-def pick_surface_nodes(H,S,R,N):
-  count = 0
-  tpick = np.zeros(0)
-  out = np.zeros((0,2))
-  while count < N:
-    halton_sample = H(4*N)  
-    xsample = S(halton_sample[:,0])
-    accept_bool = R(xsample) > halton_sample[:,1] 
-    accept = np.nonzero(accept_bool)[0]
-    accept = accept[:(N-count)]
-    tpick = np.concatenate((tpick,halton_sample[accept,0]))
-    out = np.vstack((out,xsample[accept]))
-    count += len(accept)
-
-  sortidx = np.argsort(tpick)
-  return out[sortidx,:]    
-
 def pick_nodes(H,D,R,N):
   '''
   picks N nodes based on the provided halton sequence, H, the domain, D, 
@@ -419,13 +402,17 @@ def update_save(name,time_indices,alpha):
 
 def main(args):
   # setup logger
-  name = timestamp()
+  name = args.name
+
   os.makedirs('output/%s' % name)
 
   file_handler = logging.FileHandler('output/%s/%s.log' % (name,name),'w')
   file_handler.setFormatter(formatter)
   logger.addHandler(file_handler)
+
+  string = ''.join(['\n    %-25s %s' % (key+':',val) for key,val in args.__dict__.iteritems()])
   logger.info('run name: %s' % name)
+  logger.info('arguments: %s' % string)
 
   T.tic('Define Topology')
   # Define Topology
@@ -438,22 +425,24 @@ def main(args):
   H = Halton(dim=3)
 
   # define boundary nodes
-  t = np.linspace(0,1,args.boundary_nodes+1)[:-1]
-  surface_nodes = boundary(t)
+  p = np.linspace(0,1,args.boundary_nodes+1)[:-1]
+  surface_nodes = boundary(p)
   surface_idx = range(node_count,len(surface_nodes)+node_count)
   total_nodes = np.vstack((total_nodes,surface_nodes))
   node_count += len(surface_nodes)  
 
   # find the normal vectors for each surface node, this is used for 
   # applying the boundary conditions
-  surface_tangents = (surface_nodes[range(1,args.boundary_nodes)+[0],:] - 
-                      surface_nodes[range(args.boundary_nodes),:])
+  dp = 1e-6
+  surface_nodes_plus_dp = boundary(p+dp)
+  surface_tangents = surface_nodes_plus_dp - surface_nodes
+  #surface_tangents = (surface_nodes[range(1,args.boundary_nodes)+[0],:] - 
+  #                    surface_nodes[range(args.boundary_nodes),:])
   surface_normals = np.zeros((args.boundary_nodes,2))
   surface_normals[:,0] = surface_tangents[:,1]
   surface_normals[:,1] = -surface_tangents[:,0]
   normal_lengths = np.sqrt(np.sum(surface_normals**2,1))
   surface_normals = surface_normals/normal_lengths[:,None]
-  
   # Define polygon based on boundary nodes
   D = Polygon(surface_nodes)
 
@@ -483,14 +472,14 @@ def main(args):
   # -------------------
   # load P-wave and S-wave velocities from PREM table
   prem_table = np.loadtxt(args.material_file,skiprows=1)
-  depth = prem_table[:,0] # km
-  P_vel = prem_table[:,1]*1e-3 # km/s
-  S_vel = prem_table[:,2]*1e-3 # km/s
-  rho = prem_table[:,3]*1e9 # kg/km**3
+  depth = prem_table[:,0]*1000 # m
+  P_vel = prem_table[:,1] # m/s
+  S_vel = prem_table[:,2] # m/s
+  rho = prem_table[:,3] # kg/m**3
 
   # lame parameters
-  mu = (S_vel**2*rho) # kg/km*s**2
-  lam = (P_vel**2*rho - 2*mu) # kg/km*s**2
+  mu = (S_vel**2*rho) # kg/m*s**2
+  lam = (P_vel**2*rho - 2*mu) # kg/m*s**2
   
 
   # create interpolants. The interpolants are 1D with respect to 
@@ -517,7 +506,7 @@ def main(args):
   # Form interpolation, acceleration, and boundary condition matrix
   G = interpolation_matrix(total_nodes,total_nodes,eps)
   A = acceleration_matrix(total_nodes,total_nodes,eps,lam_itp,mu_itp,rho_itp)
-  B = traction_matrix(surface_nodes,surface_normals,total_nodes,eps,lam_itp,mu_itp)
+  B = traction_matrix(surface_nodes,surface_normals,total_nodes,eps,lam_itp,mu_itp)/1e8
   G[surface_idx,:,:,:] = B
   T.toc()
 
@@ -526,8 +515,8 @@ def main(args):
   min_dist = np.min(nearest(total_nodes)[0])
   max_speed = np.max(np.concatenate((P_vel,S_vel)))
 
-  logger.info('minimum distance between nodes (h): %g km' % min_dist)
-  logger.info('maximum wavespeed (c): %g km/s' % max_speed)
+  logger.info('minimum distance between nodes (h): %g km' % (min_dist/1000.0))
+  logger.info('maximum wavespeed (c): %g km/s' % (max_speed/1000.0))
   logger.info('time step size (t): %g s' % args.time_step)
   logger.info('t*c/h: %g' % (args.time_step*max_speed/min_dist))
 
@@ -565,6 +554,7 @@ def main(args):
       a,alpha = F(u,G,A,f,surface_idx,0.0)
       alpha_list += [alpha]
       u = np.einsum('ijkl,kl',G,alpha)
+
     else:
       # compute acceleration due to source term 
       f = source(total_nodes,
@@ -594,6 +584,9 @@ if __name__ == '__main__':
   parser = argparse.ArgumentParser(
            description='''Computes two-dimensional displacements resulting from
                           seismic wave propagation''')
+
+  parser.add_argument('--name',type=str,
+                    help='''run name''')
 
   parser.add_argument('--nodes',type=int,metavar='int',
                     help='''total number of collocation points which are the 
@@ -646,6 +639,7 @@ if __name__ == '__main__':
   else:
     default_args = {}
 
+  default_args['name'] = timestamp()
   parser.set_defaults(**default_args)
   args = parser.parse_args()
   

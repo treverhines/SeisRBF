@@ -1,0 +1,13 @@
+{
+'ndoes'
+'nodes':500,
+'boundary_nodes':100,
+'max_time':25.0,
+'time_step':1.0,
+'save_interval':10
+EPS = 1.0 # shape parameter scale                                                                                  
+R_EARTH = 6371.0 #km                                                                                               
+EPICENTER = np.array([0.0,5000.0])
+COUPLE_DISTANCE = 2000.0 # km                                                                                      
+# moment tensor has units of N m                                                                                   
+MOMENT_TENSOR = np.array([1.e21,1.e21,0.0])
