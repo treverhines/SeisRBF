@@ -24,7 +24,6 @@
 %%-------------------------------------------------------------------------------
 % create a function that import a python script
 \lstloadlanguages{Python}
-%        frame=single,
 
 \definecolor{blay}{rgb}{0.93,0.93,1.0}
 \lstset{language=Python,
@@ -38,7 +37,6 @@
         numberstyle=\tiny,
         numbersep=3pt,
         stepnumber=2}
-
 
 \newcommand{\pythonscript}[2]{\begin{itemize}
                               \item[]\lstinputlisting[caption=#2,label=#1]{#1.py}
@@ -60,19 +58,19 @@ Modeling Seismic Wave Propagation with Radial Basis Functions\\
  
 In recent years seismologists have become interested in using
 observable seismic waveforms to image the elastic properties of the
-Earth's interior.  I use the term 'seismic waveform' to refer the the
+Earth's interior.  We use the term 'seismic waveform' to refer the the
 displacement history that can be observed on a seismogram over the
 course of hundreds of seconds following an earthquake.  As with any
 inverse problem, imaging the elastic properties of the earth using
 seismic waveforms requires one to be able to solve the forward
-problem, that is, to compute the waveforms that would be predicted for
+problem, that is, to compute the displacements that would be predicted for
 a given realization of the Earth's interior.  Researchers have used
 various numerical methods to solve this forward problem including
 finite difference methods, finite element methods, and spectral
 element methods (see \citet{F2011} for a review of numerical methods
-in seismology).  In this paper I will explore the potential for using
+in seismology).  In this paper We will explore the potential for using
 radial basis functions (RBFs) to solve for the time dependent
-displacements throughout the earth following an earthquake.
+displacements throughout the Earth following an earthquake.
  
 One reason why RBFs are appealing is because they offer freedom in
 choosing the collocation points.  In global seismology, one would
@@ -92,14 +90,14 @@ where topography may need to be considered.
 \section*{Problem Formulation}
 We can apply Newton's second law of motion to an infinitesimal parcel
 within a continuum to obtain displacements, $\boldsymbol{u}$,
-at any point $\boldsymbol{x}$ in the continuum as
+at any point $\boldsymbol{x}$ as
 \begin{equation}\label{MomentumEquation}
   \rho\frac{\partial^2 u_i}{\partial t^2}  = \frac{\partial \tau_{ij}}{\partial x_j} + f_i,
 \end{equation}
 where $\boldsymbol{\tau}$ and $\boldsymbol{f}$ are the stress tensor
 and body force per unit volume acting on point $\boldsymbol{x}$,
 respectively, and $\rho$ is the density at point
-$\boldsymbol{x}$. Note that I have adopted Einstein notation where
+$\boldsymbol{x}$. Note that We have adopted Einstein notation where
 summations are implied by repeated indices.  We can express
 eq. (\ref{MomentumEquation}) in terms of $\boldsymbol{u}$ by using the
 definition of infinitesimal strain,
@@ -187,13 +185,15 @@ components of the moment tensor are
 where $d$ is the offset between the force couples, which would ideally
 be infinitesimally small.  To give the moment tensor more tangible
 meaning, we can consider an isotropic compression source, such as a
-subsurface explosion, where the moment tensor representing that source
-would be
+subsurface explosion, where the force couples needed to describe the
+source are $\boldsymbol{F^{(1,1)}}$, $\boldsymbol{F^{(2,2)}}$, and 
+$\boldsymbol{F^{(3,3)}}$, where each couple has the same magnitude, $M_o/d$.
+The moment tensor that describes the source is then
 \begin{equation}
-  \boldsymbol{M} = M_o\boldsymbol{I},
+  \boldsymbol{M} = M_o\boldsymbol{I}.
 \end{equation}
-and $M_o$ is the energy of the explosion. For our numerical
-simulation, we imposed an earthquake with moment tensor
+For our numerical simulation, we imposed an earthquake with moment
+tensor
 \begin{equation}
   \boldsymbol{M} = 
   \begin{vmatrix}
@@ -241,10 +241,10 @@ has no time dependence.  This assumption may not be reasonable because
 large earthquakes could last for several minutes, which is on the
 timescale of seismic wave propagation.  
 
-\begin{figure}[h!]
+\begin{figure}
 \includegraphics[scale=0.4]{figures/MomentTensor}
 \centering
-\caption{Unit force couples, $\boldsymbol{\hat{F}}^{(i,j)}$, that can
+\caption{Force couples, $\boldsymbol{F}^{(i,j)}$, that can
   be used to represent any type of dislocation on a fault (taken from
   \citet{AR2002})}
 
@@ -292,41 +292,44 @@ $x_i$.  Likewise, the boundary conditions can be written as
  \hat{n}_2\lambda\partial_1 u_1 + 
  \hat{n}_2(\lambda + 2\mu)\partial_2 u_2 +  
  \hat{n}_1\mu\partial_1 u_2
-\end{vmatrix} 
+\end{vmatrix}. 
 \end{equation}
 
 We chose to solve eq. (\ref{DiffEq}) in the spatial dimension using
 multiquadratic radial basis functions, which are defined as
 \begin{equation}\label{RBF}
-  \phi(\boldsymbol{x}) = \sqrt{1 + (\epsilon|\boldsymbol{x} - \boldsymbol{x}_o|)^2}. 
+  \phi(\boldsymbol{x};\boldsymbol{x_0}) = \sqrt{1 + (\epsilon|\boldsymbol{x} - \boldsymbol{x}_0|)^2}. 
 \end{equation}
-In the above equation $\epsilon$ is the shape parameter and
-$\boldsymbol{x}_o$ is the center of the RBF.  We chose to use
+In the above equation, $\epsilon$ is the shape parameter and
+$\boldsymbol{x}_0$ is the center of the RBF.  We chose to use
 multiquadratic radial basis functions because interpolating a function
-using $\phi(\boldsymbol{x})$ has the desirable trait of being
+using $\phi(\boldsymbol{x};\boldsymbol{x_0})$ has the desirable trait of being
 equivalent to piece-wise linear interpolation for $\epsilon \to
 \infty$ and polynomial interpolation for $\epsilon \to 0$ at least for
 one-dimensional problems \citep{D2002}.  This suggests that a wide
 range of values for $\epsilon$ should produce reasonably accurate
 results because either end-member is a perfectly valid means of
 interpolation.  This is in contrast to using RBFs that decay to zero
-as $|\boldsymbol{x - x_o}| \to \infty$, where the interpolant for $\epsilon
-\to \infty$ is essentially useless.  We follow the common practice of
-making $\epsilon$ for each RBF proportional to the distance to the
-nearest RBF center.  We did not rigorously search for an optimal
-proportionality constant; however, we note that we tend to get
-unstable or obviously inaccurate solutions for proprtionality
-constants greater than $2$ and less than $0.1$.  For the solution
-presented in this paper, we used a proportionality constant of 1, that
-is, we set $\epsilon$ equal to the distance to the nearest neighbor.
+as $|\boldsymbol{x - x_o}| \to \infty$, where the interpolant for
+$\epsilon \to \infty$ is essentially useless.  We follow the common
+practice of making $\epsilon$ for each RBF proportional to the
+distance to the nearest RBF center.  We did not rigorously search for
+an optimal proportionality constant; however, we note that we tend to
+get unstable or obviously inaccurate solutions for proportionality
+constants greater than $2$ and less than $0.4$.  In particular, small
+values of epsilon tend to produce instabilities at sharp material
+interface or at the surface.  large values of epsilon create
+large scale, unrealistic undulations. For the solution presented in
+this paper, we used a proportionality constant of 1, that is, we set
+$\epsilon$ equal to the distance to the nearest neighbor.
 
 We approximate the solution for displacements as 
 \begin{equation}
-  u_1 \approx \sum_{j=1}^{N}\alpha_{j}(t)\phi_j(\boldsymbol{x})
+  u_1 \approx \sum_{j=1}^{N}\alpha_{j}(t)\phi_j(\boldsymbol{x};\boldsymbol{x_j})
 \end{equation}
 and
 \begin{equation}
-  u_2 \approx \sum_{j=1}^{N}\beta_{j}(t)\phi_j(\boldsymbol{x}),
+  u_2 \approx \sum_{j=1}^{N}\beta_{j}(t)\phi_j(\boldsymbol{x};\boldsymbol{x_j}),
 \end{equation}
 which can also be written as 
 \begin{equation}
@@ -415,8 +418,9 @@ We perform the time integration with a leapfrog method and our
 procedure for solving eq. (\ref{DiffEq}) is as follows:
 \begin{enumerate}
 \item Form the matrix $\boldsymbol{J}$, which consists of
-  $\boldsymbol{B}$ evaluated at the boundary collocation points and 
-  $\boldsymbol{G}$ evaluated at the interior collocation points.
+  $\boldsymbol{B}$ evaluated at the boundary collocation points and
+  $\boldsymbol{G}$ evaluated at the interior collocation points. We
+  use the collocation points as the RBF centers.
 \item Form the vector $\boldsymbol{r}^0$, which consists of zeros for
   the boundary collocation points and $\boldsymbol{u}^{0}$ at the interior collocation points 
 \item Solve $\boldsymbol{r}^0=\boldsymbol{J}[\boldsymbol{\alpha}^0\ \boldsymbol{\beta}^0]^T$ for
@@ -449,36 +453,36 @@ perform an interpolation using multiquadratic RBFs to obtain PREM as a
 continuous and analytically differentiable function.  Our interpolants
 for PREM are shown in figure 2, 3, and 4.
 
-\begin{figure}[h!]
-\includegraphics[scale=0.5]{figures/Pvel}
+\begin{figure}
+\includegraphics[scale=0.45]{figures/Pvel}
 \centering
 \caption{P wave velocities ($\sqrt{(\lambda + 2\mu)/\rho}$) from PREM.
   Gray dots indicate collocation points used in solving
   eq. (\ref{DiffEq})}
 
 \end{figure}
-\begin{figure}[h!]
-\includegraphics[scale=0.5]{figures/Svel}
+\begin{figure}
+\includegraphics[scale=0.45]{figures/Svel}
 \centering
 \caption{S wave velocities ($\sqrt{\mu/\rho}$) from PREM}
 
 \end{figure}
-\begin{figure}[h!]
-\includegraphics[scale=0.5]{figures/density}
+\begin{figure}
+\includegraphics[scale=0.45]{figures/density}
 \centering
 \caption{Densities from PREM}
 
 \end{figure}
 
 We also must address how the collocation points are chosen.  PREM has
-a major material disontinuity at the core-mantle boundary and we would
+a major material discontinuity at the core-mantle boundary and we would
 ideally prefer to have a higher density of nodes at that interface.
 Additionally, the lower mantle has higher P and S wave velocities
 relative to the upper mantle, crust, and core.  We would then prefer a
 lower density of collocation points in the lower mantle in order to
 keep our solution stable during time stepping.  Although we seek
 regional scale variations in node density, we still want our
-collocation points to have low discrepency in any given region of the
+collocation points to have low discrepancy in any given region of the
 earth.  We have developed a simple method to produce a distribution of
 collocation points that satisfy our specifications.  Let
 $\psi:\boldsymbol{x}\to [0,1]$ be a normalized function describing the
@@ -495,8 +499,7 @@ collocation points.  This is essential for a stable solution.  We take
 the width of the buffer to be the smallest distance between boundary
 nodes.  The reader may be able to notice this slight buffer in either
 Figures 2, 3 or 4.
-
-\begin{algorithm}[h!]
+\begin{algorithm}
 \caption{Collocation points}
 \begin{algorithmic}
 \STATE $\boldsymbol{C} = \emptyset$
@@ -510,69 +513,60 @@ Figures 2, 3 or 4.
 \end{algorithmic}
 \end{algorithm}
 \section*{Results}
-Our numerical solution to eq. (\ref{DiffEq}) is shown in figures 2-10.
+Our numerical solution to eq. (\ref{DiffEq}) is shown in figures 5-14.
 The most prominent feature in our solution are the Raleigh waves which
-travel along the surface and have decaying amplitude with depth.  The
-fastest traveling waves are the P waves which have only a faint
-signature.  We can also be assured that the material properties are
-properly implemented because S waves, which have displacements
-parallel to the wave front, do not enter the core because it has a
-shear wave velocity of zero.
+travel along the surface and have decaying amplitude with depth.  One
+can identify the P waves as wave fronts which have displacements
+parallel to the propagation direction.  These are the faint blue, fast
+traveling waves.  The S waves can be identified as having displacements
+perpendicular to the propagation direction.  
+%We can also be assured that the
+%material properties are properly implemented because S waves, which
+%have displacements parallel to the wave front, do not enter the core
+%because it has a shear wave velocity of zero.
 
-It is also worth noting that the solution has symmetry about the
-vertical axis.  This symmetry is no suprise and we have attemted to
-solve eq. (\ref{DiffEq}) on only half the domain.  However, we have
-found that solutions using RBFs are incredibly sensitive to corners in
-the domain and our solution quickly went unstable after a few time
-steps.
+It is worth noting that the solution has symmetry about the vertical
+axis.  This symmetry is no surprise and we have attempted to solve
+eq. (\ref{DiffEq}) on only half the domain.  However, we have found
+that solutions using RBFs are incredibly sensitive to corners in the
+domain and our solution quickly went unstable after a few time steps.
+Although we are being inefficient by solving for displacements on a
+full disk, we are now able to check that our solution is accurate
+based on the symmetry of our results.  With this means of validation,
+it is apparent that our solution can not possibly be accurate beyond
+about 800 seconds when substantial asymmetric structures appear in the
+solution. This is unfortunate because seismic waves can be observed
+for thousands of seconds after an earthquake.  We note that the
+solution presented here required about $8 GB$ of memory and took 30
+hours to run on two cores of a desktop computer (using a parallelized
+matrix solver).  A higher density of collocation points is clearly
+necessary to accurately model seismic wave propagation but we do not
+have the computational resources for such a calculation.  In fact,
+existing spectral element software for solving seismic wave
+propagation on a similar two-dimensional domain is intended for use on
+state of the art super computers \citep[e.g.][]{N2007}, so we are not
+too discouraged by the poor accuracy we obtained using a standard
+desktop computer.
 
-We note that the magnitude of displacements in our solution is far
-larger than what we would reasonably expect.  We believe this to be a
-bug in our program that is related to unit conversions and the actual
-solution should be different by only a constant factor.
-
-We can also verify the accuracy of our solution by ensuring that it is 
-symmetric
-
-\begin{figure}
-\includegraphics[scale=0.45]{figures/100s}
-\centering
-\caption{Solution for displacements at 100 seconds after an earthquake. Color
-  indicates the magnitude of displacement and vectors indicate
-  direction}
-\end{figure}
-\begin{figure}
-\includegraphics[scale=0.45]{figures/200s}
-\centering
-\caption{Solution for displacements at 200 seconds after an earthquake}
-
-\end{figure}
-\begin{figure}
-\includegraphics[scale=0.45]{figures/300s}
-\centering
-\caption{Solution for displacements at 300 seconds after an earthquake}
-
-\end{figure}
-\begin{figure}
-\includegraphics[scale=0.45]{figures/400s}
-\centering
-\caption{Solution for displacements at 400 seconds after an earthquake}
-
-\end{figure}
-\begin{figure}
-\includegraphics[scale=0.45]{figures/500s}
-\centering
-\caption{Solution for displacements at 500 seconds after an earthquake}
-\end{figure}
+\section*{Conclusion}
+After our best effort, we were unable to satisfactorily model
+seismic wave propagation using radial basis functions.  This is not
+due to any fault of the RBF method, but rather due to our
+computational limitations.  This is not to say that RBF methods have
+no faults.  In our experience the RBF method seems quite precarious.
+A poorly chosen shape parameter or a single collocation point that is
+too close to the boundary would cause the entire solution to go
+unstable.  Additionally, a corner in the problem domain can lead to an
+unstable solution, even though the RBF method is touted as being able
+to handle arbitrary geometries.  Further exploration is clearly needed
+to make our model for seismic wave propagation more robust.
 
 \section*{Additional notes}
-  All the software that I have written to produce the results shown in
-  this paper are included below.  The software (with eventual bug
-  fixes) can also be found at https://github.com/treverhines/SeisRBF
-  My software uses packages which can be found in the Anaconda Python
-  distribution from Continuum Analytics.  
-
-%\pythonscript{Lab03_snippet}{Lab03.py} 
+All the software we have written to produce the results shown in this
+paper are included below.  The software (with eventual bug fixes) can
+also be found at https://github.com/treverhines/SeisRBF.  The packages
+used in our software can be found in the Anaconda Python distribution
+from Continuum Analytics.
 
 \begin{thebibliography}{}
   \bibitem[Aki \& Richards(2002)]{AR2002} Aki, K. \& Richards, P.,
@@ -592,6 +586,81 @@ symmetric
 
   \bibitem[Fichtner(2011)]{F2011} Fichtner, A., 2011. Full Seismic
     Waveform Modelling and Inversion, \textit{Springer}
+ 
+  \bibitem[Nissen-Meyer et al.(2007)]{N2007} Nissen-Meyer, T.,
+    Fournier, A., Dahlen, F. A., 2007. A 2-D spectral-element method
+    for computing spherical-earth seismograms--I. Moment-tensor
+    source, Geophys. J. Int., Vol. 168, issue 3, pp. 1067-1093
 \end{thebibliography}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/100s}
+\centering
+\caption{Solution for displacements at 100 seconds after an earthquake. Color
+  indicates the magnitude of displacement and vectors indicate
+  direction}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/200s}
+\centering
+\caption{Solution for displacements at 200 seconds after an earthquake}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/300s}
+\centering
+\caption{Solution for displacements at 300 seconds after an earthquake}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/400s}
+\centering
+\caption{Solution for displacements at 400 seconds after an earthquake}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/500s}
+\centering
+\caption{Solution for displacements at 500 seconds after an earthquake}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/600s}
+\centering
+\caption{Solution for displacements at 600 seconds after an earthquake}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/700s}
+\centering
+\caption{Solution for displacements at 700 seconds after an earthquake}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/800s}
+\centering
+\caption{Solution for displacements at 800 seconds after an earthquake}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/900s}
+\centering
+\caption{Solution for displacements at 900 seconds after an earthquake}
+\end{figure}
+
+\begin{figure}
+\includegraphics[scale=0.4]{figures/1000s}
+\centering
+\caption{Solution for displacements at 1000 seconds after an earthquake}
+\end{figure}
+
+\break
+\pythonscript{scripts/SeisRBF}{SeisRBF.py} 
+\pythonscript{scripts/radial}{radial.py} 
+\pythonscript{scripts/halton}{halton.py} 
+\pythonscript{scripts/usrfcn}{usrfcn.py} 
+
 \end{document}
+
 

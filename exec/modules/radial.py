@@ -1,4 +1,21 @@
 #!/usr/bin/env python
+#
+# This module defines the gaussian, multiquadratic, and inverse
+# quadratic radial basis functions.  This module makes use of the
+# class, RBF, which takes a symbolic expression of an RBF and converts
+# it and its derivatives into a numerical function. So you can
+# evaluate any arbitrary derivative of an RBF even though the
+# derivatives are not explicitly written anywhere in this module.
+#
+# For example, consider the Gaussian RBF which is saved as 'ga'.
+# If we want to evaluate the first derivative of ga with respect to
+# the second spatial dimension then the command would be.
+#
+# >> ga(x,centers,eps,diff=(0,1)). 
+#
+# See the help documentation for ga for more information about its
+# arguments
+
 from __future__ import division
 import sympy 
 import numpy as np
@@ -8,6 +25,11 @@ _EPS = sympy.symbols('EPS')
 
 class RBF(object):
   def __init__(self,expr):    
+    '''
+    Parameters
+    ----------
+      expr: Symbolic expression of the RBF with respect to _R and _EPS
+    '''
     assert expr.has(_R), (
       'RBF expression does not contain _R')
     
@@ -18,17 +40,38 @@ class RBF(object):
 
   def __call__(self,x,c,eps=None,diff=None):
     '''
-    D: number of dimensions
-    N: number of sample points
-    M: numer of radii
-    
-    x: shape (N,) or (N,D)
-    c: shape (M,) or (M,D)
-    out: shape (N,M)
+    evaluates M radial basis functions (RBFs) with arbitary dimension
+    at N points.
 
-    shapes get converted to (N,M,D) arrays
+    Parameters                                       
+    ----------                                         
+      x: ((N,) or (N,D) array) locations to evaluate the RBF
+                                                                          
+      centers: ((M,) or (M,D) array) centers of each RBF
+                                                                 
+      eps: ((M,) array, default=np.ones(M)) Scale parameter for each RBF
+                                                                           
+      diff: ((D,) tuple, default=(0,)*dim) a tuple whos length is
+        equal to the number of spatial dimensions.  Each value in the
+        tuple must be an integer indicating the order of the
+        derivative in that spatial dimension.  For example, if the the
+        spatial dimensions of the problem are 3 then diff=(2,0,1)
+        would compute the second derivative in the first dimension and
+        the first derivative in the third dimension.
 
-    '''
+    Returns
+    -------
+      out: (N,M) array for each M RBF evaluated at the N points
+
+    Note 
+    ---- 
+      the derivatives are computed symbolically in Sympy and then
+      lambdified to evaluate the expression with the provided values.
+      The lambdified functions are cached in the scope of the radial
+      module and will be recalled if a value for diff is used more
+      than once in the Python session.
+
+    ''' 
     x = np.asarray(x)
     c = np.asarray(c)   
     xshape = np.shape(x)
@@ -53,8 +96,8 @@ class RBF(object):
     N = np.shape(x)[0]
     M = np.shape(c)[1]
     assert np.shape(x)[2] == np.shape(c)[2], (
-      'if x and c are 2-D arrays then their second dimensions must have the '
-      'same length')
+      'if x and c are 2-D arrays then their second dimensions must '
+      'have the same length')
     dim = np.shape(x)[2]
     if eps is None:
       eps = np.ones(M)
@@ -76,8 +119,8 @@ class RBF(object):
       diff += (0,)
 
     assert len(diff) == dim, (
-      'cannot specify derivatives for dimensions that are higher than the '
-      'dimensions of x and center')
+      'cannot specify derivatives for dimensions that are higher than '
+      'the dimensions of x and center')
 
     if diff not in self.diff_dict:
       self._make_function(diff)
@@ -100,20 +143,7 @@ class RBF(object):
 
 class RBFInterpolant(object):
   '''
-  An RBF interpolant for a given set of collocation points and values
-
-    D: number of domain dimensions
-    R: number of range dimensions
-    N: number of collocation points
-    
-    x: (N,) or (N,D)
-    eps: (N,)
-    value: (N,) or (N,R) 
-    alpha: (N,) or (N,R)
-
-    output: (N,R)
-
-    if D or R are not given then they are assumed 1
+  A callable RBF interpolant
   '''
   def __init__(self,
                x,
@@ -121,6 +151,25 @@ class RBFInterpolant(object):
                value=None,
                alpha=None,
                rbf=None):
+    '''
+    Initiates the RBF interpolant
+
+    Parameters
+    ----------
+      x: ((N,) or (N,D) array) x coordinate of the interpolation
+        points which also make up the centers of the RBFs
+
+      eps: ((N,) array) shape parameters for each RBF  
+ 
+      value: ((N,) or (N,R) array) Values at the x coordinates. If this 
+        is not provided then alpha must be given
+
+      alpha: ((N,) or (N,R) array) Coefficients for each RBFs. If this 
+       is not provided then value must be given  
+
+      rbf: type of rbf to use. either mq, ga, or iq
+
+    '''
     if rbf is None:
       rbf = mq
 
@@ -172,6 +221,23 @@ class RBFInterpolant(object):
     self.rbf = rbf
 
   def __call__(self,xitp,diff=None):
+    '''
+    Returns the interpolant evaluated at xitp
+
+    Parameters 
+    ---------- 
+      xitp: ((N,) or (N,D) array) points where the interpolant is to 
+        be evaluated
+
+      diff: ((D,) tuple, default=(0,)*dim) a tuple whos length is
+        equal to the number of spatial dimensions.  Each value in the
+        tuple must be an integer indicating the order of the
+        derivative in that spatial dimension.  For example, if the the
+        spatial dimensions of the problem are 3 then diff=(2,0,1)
+        would compute the second derivative in the first dimension and
+        the first derivative in the third dimension.
+
+    '''
     out = np.zeros((len(xitp),self.R))
     for r in range(self.R):
       out[:,r] = np.sum(self.rbf(xitp,
@@ -182,15 +248,14 @@ class RBFInterpolant(object):
     return out 
 
 
-
 _FUNCTION_DOC = '''
   evaluates M radial basis functions (RBFs) with arbitary dimension at N points.
 
   Parameters                                       
   ----------                                         
-    x: ((N,) or (N,D) array) D dimensional locations to evaluate the RBF
+    x: ((N,) or (N,D) array) locations to evaluate the RBF
                                                                           
-    centers: ((M,) or (M,D) array) D dimensional centers of each RBF
+    centers: ((M,) or (M,D) array) centers of each RBF
                                                                  
     eps: ((M,) array, default=np.ones(M)) Scale parameter for each RBF
                                                                            

@@ -4,32 +4,36 @@
 # Final Project
 # Trever Hines
 #
-# Description
-# -----------
-# This program solves the equation of motion for two-dimensional
-# displacement in a two dimensional elastic domain.  
-
-# I assume a disk shaped domain, although this can be readily changed.
-# This problem is intended to simulate seismic waves on a global scale
-# and I assume elastic properties and densities from the Preliminary
-# Reference Earth Model (PREM) (Dziewonski & Anderson 1981). 
-
-# I use radial basis functions to solve this problem because the
-# heterogeneous material properties require a heterogeneous node
-# density
+# Description 
+# ----------- 
+#   This program solves the equation of motion for two-dimensional
+#   displacement in a two dimensional elastic domain.  This is
+#   intended to simulate seismic waves on a global scale 
 
 # Dependencies 
 # ------------ 
-# In additoon to the standard scientific python packages, this program
-# uses three other modules which I wrote: 
+#   Most of the modules used in this program are in the Anaconda 
+#   Python distribution from Continuum Analytics.  This he program 
+#   also requires the following files to be exist in your Python path
+#   
+#     usrfcn.py: file containing user defined functions that are 
+#       specific to the problem being solved
 #
-#   radial.py: Contains the radial basis functions 
-#   halton.py: Used to create a low discrepancy node distribution
+#     usrparams.json: This file contains a dictionary of user 
+#       specified parameters. The parameters can also be specified
+#       via the command line when this program is run. for example
+#       "SeisRBF.py --nodes 1000" will run this program using 1000
+#       nodes
+#
+#     radial.py: Contains the radial basis function definitions 
+#
+#     halton.py: Used to create a low discrepancy node distribution
+#
+
 import sys
 sys.path.append('.')
 import os
 import numpy as np
-import matplotlib.pyplot as plt
 from modules.radial import mq 
 from modules.radial import RBFInterpolant 
 from modules.halton import Halton
@@ -40,7 +44,6 @@ from usrfcn import node_density
 from shapely.geometry import Polygon
 from shapely.geometry import Point
 from shapely.geometry import LineString
-from descartes import PolygonPatch
 from modules.misc import Timer
 from modules.misc import timestamp
 import pickle
@@ -51,21 +54,19 @@ import json
 RBF = mq # multiquadtratic radial basis function
 SOLVER = np.linalg.solve # this is pythons default solver
 logger = logging.getLogger()
-formatter = logging.Formatter('%(asctime)s %(module)s: [%(levelname)s] %(message)s',
-                              '%m/%d/%Y %H:%M:%S')
+formatter = logging.Formatter(
+              '%(asctime)s %(module)s: [%(levelname)s] %(message)s',
+              '%m/%d/%Y %H:%M:%S')
 stream_handler = logging.StreamHandler(sys.stdout)
 stream_handler.setFormatter(formatter)
 logger.addHandler(stream_handler)
 logger.setLevel(logging.INFO)
-
 T = Timer()
 
-# Seismic Source Functions
-# ------------------------
 def delta(x,x_o,eps):
   '''
-  returns an 2 dimensional Gaussian function with standard deviation
-  equal to eps
+  Two-dimensional Gaussian function with center at x_o, standard
+  deviation equal to eps, and evaluated at x 
   '''
   z = ((x[:,0]-x_o[0])/eps)**2 + ((x[:,1]-x_o[1])/eps)**2 
   c = 1.0/(2*np.pi*eps**2)
@@ -86,7 +87,7 @@ def force_couple(x,x_o,i,j,d):
 
   Returns
   -------
-    forces at positions x
+    force density at positions x
   '''
   force_out = np.zeros((len(x),2))
   x_1 = 1.0*x_o 
@@ -100,9 +101,7 @@ def force_couple(x,x_o,i,j,d):
 
 def source(x,x_o,t,M,d):
   '''
-  This function uses the global MOMENT_TENSOR variable and the 
-  user defined source_time_function to produce the force at position
-  x and time t
+  Returns the force density at position x and time t
   '''
   out = M[0]*force_couple(x,x_o,0,0,d)/d
   out += M[1]*force_couple(x,x_o,1,1,d)/d
@@ -111,12 +110,10 @@ def source(x,x_o,t,M,d):
   return out*source_time_function(t)
 
 
-# Numerical Functions
-# -------------------
 def leapfrog(F,u,v,a,dt,F_args=None,F_kwargs=None):
   '''
-  Leapfrog time stepping algorithm which solves the next
-  time step in d^u/dt^2 = F(u)
+  Leapfrog time stepping algorithm which solves the next time step in
+  d^u/dt^2 = F(u)
   
   Parameters 
   ---------- 
@@ -125,20 +122,18 @@ def leapfrog(F,u,v,a,dt,F_args=None,F_kwargs=None):
       as the first argument and then F_args and F_kwargs
     u: displacement at the current time step 
     v: velocity at the current time step 
+    a: acceleration at the current time step
     dt: time step size
-    a: (optional) acceleration at the current time step. If this is
-      not provided then a will be computed with F(u). However, this
-      is inefficient because F(u) should have been computed at the 
-      previous time step
     F_args: (optional) tuple of dditional arguments to F
     F_kwargs: (optional) dictionary of additional key word arguments 
       to F
 
   Returns
   -------
-    tuple of u_new,v_new,a_new, and alpha_new.  These are the 
-    displacements, velocities, accelerations, and spectral 
+    tuple of u_new,v_new,a_new, and alpha_new.  These are the
+    displacements, velocities, accelerations, and spectral
     coefficients for the new time step
+
   '''
   if F_args is None:
     F_args = ()
@@ -154,108 +149,115 @@ def leapfrog(F,u,v,a,dt,F_args=None,F_kwargs=None):
 def acceleration_matrix(x,c,eps,lam_itp,mu_itp,rho_itp):
   '''
   forms a matrix which returns accelerations at points x when
-  multiplied by the spectral coefficients
+  multiplied by the spectral coefficients. This is H in the main text
 
   Paramters
   ---------
-  x_ij: shape (N,2) array of points
-  c_ij: shape (M,2) array of RBF centers
-  eps_i: shape (M,) array of shape parameters
-  lam_itp: RBFInterpolant for lambda
-  mu_itp: RBFInterpolant for mu
-  rho_itp: RBFInterpolant for rho
+    x: (N,2) array of points
+    c: (M,2) array of RBF centers
+    eps: (M,) array of shape parameters
+    lam_itp: RBFInterpolant for lambda
+    mu_itp: RBFInterpolant for mu
+    rho_itp: RBFInterpolant for rho
 
   Returns
   -------
-  A_ijkl: shape (N,2,M,2) array. Organized such that 
-    a_ij = A_ijkl*alpha_kl, where a_ij is the acceleration at point i 
-    in direction j, while alpha_kl is the spectral coefficient k for 
-    displacement in direction l
+    H: (N,2,M,2) array. Organized such that a_ij = H_ijkl*alpha_kl, 
+    where a_ij is the acceleration at point i in direction j, while 
+    alpha_kl is the spectral coefficient k for displacement in 
+    direction l
 
   '''
   N = len(x)
   M = len(c)
-  A = np.zeros((N,2,M,2))
-  A[:,0,:,0] = ((lam_itp(x,diff=(1,0)) + 2*mu_itp(x,diff=(1,0)))*RBF(x,c,eps,diff=(1,0)) + 
-                (lam_itp(x,diff=(0,0)) + 2*mu_itp(x,diff=(0,0)))*RBF(x,c,eps,diff=(2,0)) +
+  H = np.zeros((N,2,M,2))
+  H[:,0,:,0] = ((lam_itp(x,diff=(1,0)) + 
+                 2*mu_itp(x,diff=(1,0)))*RBF(x,c,eps,diff=(1,0)) + 
+                (lam_itp(x,diff=(0,0)) + 
+                 2*mu_itp(x,diff=(0,0)))*RBF(x,c,eps,diff=(2,0)) +
                 mu_itp(x,diff=(0,1))*RBF(x,c,eps,diff=(0,1)) +
                 mu_itp(x,diff=(0,0))*RBF(x,c,eps,diff=(0,2)))/rho_itp(x)
 
-  A[:,0,:,1] = (lam_itp(x,diff=(1,0))*RBF(x,c,eps,diff=(0,1)) + 
+  H[:,0,:,1] = (lam_itp(x,diff=(1,0))*RBF(x,c,eps,diff=(0,1)) + 
                 lam_itp(x,diff=(0,0))*RBF(x,c,eps,diff=(1,1)) + 
                 mu_itp(x,diff=(0,1))*RBF(x,c,eps,diff=(1,0)) + 
                 mu_itp(x,diff=(0,0))*RBF(x,c,eps,diff=(1,1)))/rho_itp(x)
 
-  A[:,1,:,0] = (mu_itp(x,diff=(1,0))*RBF(x,c,eps,diff=(0,1)) + 
+  H[:,1,:,0] = (mu_itp(x,diff=(1,0))*RBF(x,c,eps,diff=(0,1)) + 
                 mu_itp(x,diff=(0,0))*RBF(x,c,eps,diff=(1,1)) + 
                 lam_itp(x,diff=(0,1))*RBF(x,c,eps,diff=(1,0)) + 
                 lam_itp(x,diff=(0,0))*RBF(x,c,eps,diff=(1,1)))/rho_itp(x)
 
-  A[:,1,:,1] = ((lam_itp(x,diff=(0,1)) + 2*mu_itp(x,diff=(0,1)))*RBF(x,c,eps,diff=(0,1)) + 
-                (lam_itp(x,diff=(0,0)) + 2*mu_itp(x,diff=(0,0)))*RBF(x,c,eps,diff=(0,2)) +
+  H[:,1,:,1] = ((lam_itp(x,diff=(0,1)) + 
+                 2*mu_itp(x,diff=(0,1)))*RBF(x,c,eps,diff=(0,1)) + 
+                (lam_itp(x,diff=(0,0)) + 
+                 2*mu_itp(x,diff=(0,0)))*RBF(x,c,eps,diff=(0,2)) +
                 mu_itp(x,diff=(1,0))*RBF(x,c,eps,diff=(1,0)) +
                 mu_itp(x,diff=(0,0))*RBF(x,c,eps,diff=(2,0)))/rho_itp(x)
 
-  return A
+  return H
 
 
 def traction_matrix(x,n,c,eps,lam_itp,mu_itp):
   '''
   forms a matrix which returns traction force at points x and normal n 
-  when multiplied by the spectral coefficients  
+  when multiplied by the spectral coefficients. This is B in the main 
+  text.  
 
   Paramters
   ---------
-  x_ij: shape (N,2) array of locations
-  n_ij: shape (N,2) array of normal directions 
-  c_ij: shape (M,2) array of RBF centers 
-  eps_i: shape (M,) array of shape parameters
+  x: (N,2) array of locations
+  n: (N,2) array of normal directions 
+  c: (M,2) array of RBF centers 
+  eps: (M,) array of shape parameters
   lam_itp: RBFInterpolant for lambda
   mu_itp: RBFInterpolant for mu
 
   Returns
   -------
-  T_ijkl: shape (N,2,M,2) array. Organized such that 
-    tau_ij = T_ijkl*alpha_kl, where tau_ij is the traction force in 
-    direction j at point i with normal direction i, while alpha_kl is 
-    the spectral coefficient k for displacement in direction l
+    B: shape (N,2,M,2) array. Organized such that 
+      tau_ij = B_ijkl*alpha_kl, where tau_ij is the traction force in 
+      direction j at point i with normal direction i, while alpha_kl is 
+      the spectral coefficient k for displacement in direction l
 
   '''
   N = len(x)
   M = len(c)
-  T = np.zeros((N,2,M,2))
-  T[:,0,:,0] = (n[:,[0]]*(lam_itp(x) + 2*mu_itp(x))*RBF(x,c,eps,diff=(1,0)) +
+  B = np.zeros((N,2,M,2))
+  B[:,0,:,0] = (n[:,[0]]*(lam_itp(x) + 
+                2*mu_itp(x))*RBF(x,c,eps,diff=(1,0)) +
                 n[:,[1]]*mu_itp(x)*RBF(x,c,eps,diff=(0,1)))
 
-  T[:,0,:,1] = (n[:,[0]]*lam_itp(x)*RBF(x,c,eps,diff=(0,1)) + 
+  B[:,0,:,1] = (n[:,[0]]*lam_itp(x)*RBF(x,c,eps,diff=(0,1)) + 
                 n[:,[1]]*mu_itp(x)*RBF(x,c,eps,diff=(1,0)))
 
-  T[:,1,:,0] = (n[:,[0]]*mu_itp(x)*RBF(x,c,eps,diff=(0,1)) + 
+  B[:,1,:,0] = (n[:,[0]]*mu_itp(x)*RBF(x,c,eps,diff=(0,1)) + 
                 n[:,[1]]*lam_itp(x)*RBF(x,c,eps,diff=(1,0)))
 
-  T[:,1,:,1] = (n[:,[1]]*(lam_itp(x) + 2*mu_itp(x))*RBF(x,c,eps,diff=(0,1)) +
+  B[:,1,:,1] = (n[:,[1]]*(lam_itp(x) + 
+                2*mu_itp(x))*RBF(x,c,eps,diff=(0,1)) +
                 n[:,[0]]*mu_itp(x)*RBF(x,c,eps,diff=(1,0)))
 
-  return T
+  return B
 
 
 def interpolation_matrix(x,c,eps):
   '''
   forms a matrix which returns displacement at points x when 
-  multiplied by the spectral coefficients  
+  multiplied by the spectral coefficients.  This is G in the main text  
 
   Paramters
   ---------
-  x_ij: shape (N,2) array of locations
-  c_ij: shape (M,2) array of RBF centers 
-  eps_i: shape (M,) array of shape parameters
+    x_ij: shape (N,2) array of locations
+    c_ij: shape (M,2) array of RBF centers 
+    eps_i: shape (M,) array of shape parameters
 
   Returns
   -------
-  G_ijkl: shape (N,2,M,2) array. Organized such that 
-    u_ij = G_ijkl*alpha_kl, where u_ij is the displacement in 
-    direction j at point i, while alpha_kl is the spectral coefficient 
-    k for displacement in direction l
+    G_ijkl: shape (N,2,M,2) array. Organized such that 
+      u_ij = G_ijkl*alpha_kl, where u_ij is the displacement in 
+      direction j at point i, while alpha_kl is the spectral coefficient 
+      k for displacement in direction l
 
   '''
   N = len(x)
@@ -268,10 +270,10 @@ def interpolation_matrix(x,c,eps):
 
 
 def nearest(x):
-  '''                
-  returns a list of distances to the nearest point for each point in     
-  x. This is used to determine the shape parameter for each radial      
-  basis function     
+  '''
+  Returns the distance to nearest point for each point in x. It also
+  returns the index of the nearest point.  This is used to determine
+  the shape parameter for each radial basis function.
   '''
   tol = 1e-4
   x = np.asarray(x)
@@ -293,71 +295,75 @@ def nearest(x):
 
 def pick_nodes(H,D,R,N):
   '''
-  picks N nodes based on the provided halton sequence, H, the domain, D, 
-  and the node density function, R.
+  This is algorithm 1 in the main text
+
+  Parameters
+  ----------
+    H: 3 dimensional Halton sequence (first two dimensions are used 
+      for testing points in the domain and the third dimension is 
+      used for accepting/rejecting)
+    D: Polygon instance which defines the domain boundary
+    R: Density function which takes a coordinate and returns the 
+      desired node density at that point
+    N: number of nodes
+
+  Returns
+  -------
+    out: (N,2) array of nodes within the domain and distributed with 
+      the desired density
   '''
-  count = 0
-  out = np.zeros((0,2))
-  while count < N:
-    minval = np.min(D.exterior.xy)
-    maxval = np.max(D.exterior.xy)
-    x = H.qunif(minval,maxval,4*N)[:,:2]
-    nd = R(x)
-    accept_bool = nd > H(4*N)[:,2]
-    accept = np.nonzero(accept_bool)[0]
-    x = x[accept]
-    accept = []
-    for idx,val in enumerate(x):
-      p = Point(val)
-      if D.contains(p):
-        accept += [idx]
+  minval = np.min(D.exterior.xy)
+  maxval = np.max(D.exterior.xy)
+  
+  out = []
+  while len(out) < N:
+    Hk3 = H(1)[0]
+    Hk2 = Hk3[[0,1]]
+    Hk1 = Hk3[2]
+    # scale Hk2 so that it encompasses the domain
+    Hk2 *= (maxval-minval)
+    Hk2 += minval 
+    if (R(Hk2) > Hk1) & D.contains(Point(Hk2)):
+      out += [Hk2]
 
-    accept = np.array(accept)
-    accept = accept[:(N-count)]
-    x = x[accept]
-    out = np.vstack((out,x))
-    count += len(x)
-
+  out = np.array(out)
   return out
 
 
-def F(u,G,A,f,BCidx,BCval): 
+def F(u,J,H,f,BCidx,BCval): 
   '''
   computes acceleration from u.  This is done by first finding the 
   spectral coefficients from u and then using the spectral 
-  coefficients to evaluate the derivative. The matrix G is the 
+  coefficients to evaluate the derivative. The matrix J is the 
   interpolation matrix except that rows BCidx have been swapped out
   with rows that will enforce the boundary conditions.  The 
   corresponding rows in u get replaced with BCval in this function
-
   '''
   # set boundary conditions
   u[BCidx,:] = BCval  
   
   # Reshape the arrays into something tractable
-  N,D1,M,D2 = np.shape(G)
+  N,D1,M,D2 = np.shape(J)
   u_shape = (N,D1)
   assert np.shape(u) == u_shape
   alpha_shape = (M,D2)
-  G = np.reshape(G,(N,D1,M*D2))
-  # ijm
-  G = np.einsum('ijm->mij',G)
-  G = np.reshape(G,(M*D2,N*D1))
-  # mn
-  G = np.einsum('mn->nm',G)
+  J = np.reshape(J,(N,D1,M*D2))
+  J = np.einsum('ijm->mij',J)
+  J = np.reshape(J,(M*D2,N*D1))
+  J = np.einsum('mn->nm',J)
   u = np.reshape(u,N*D1)
   T.toc()
 
   T.tic('solve for alpha')
   # solve for alpha
-  alpha = SOLVER(G,u)
+  alpha = SOLVER(J,u)
   T.toc()
 
   # reshape alpha into a 2D array
   alpha = np.reshape(alpha,alpha_shape)
 
   # solve for acceleration
-  a = np.einsum('ijkl,kl',A,alpha)
+  a = np.einsum('ijkl,kl',H,alpha)
 
   # add acceleration due to forcing term
   a = a + f
@@ -374,6 +380,9 @@ def initial_save(name,
                  lam,
                  rho,
                  time_steps):
+  '''
+  Saves the progress of the simulation
+  '''
   logger.info('saving model geometry in output/%s' % name)  
   f = h5py.File('output/%s/%s.h5' % (name,name),'w')
   f['name'] = name
@@ -392,6 +401,9 @@ def initial_save(name,
 
 
 def update_save(name,time_indices,alpha):
+  '''
+  Saves the progress of the simulation
+  '''
   logger.info('saving coefficients in output/%s' % name)  
   f = h5py.File('output/%s/%s.h5' % (name,name),'a')
   alpha = np.asarray(alpha)
@@ -406,11 +418,13 @@ def main(args):
 
   os.makedirs('output/%s' % name)
 
-  file_handler = logging.FileHandler('output/%s/%s.log' % (name,name),'w')
+  file_handler = logging.FileHandler(
+                   'output/%s/%s.log' % (name,name),'w')
   file_handler.setFormatter(formatter)
   logger.addHandler(file_handler)
 
-  string = ''.join(['\n    %-25s %s' % (key+':',val) for key,val in args.__dict__.iteritems()])
+  string = ''.join(['\n    %-25s %s' % (key+':',val) 
+                   for key,val in args.__dict__.iteritems()])
   logger.info('run name: %s' % name)
   logger.info('arguments: %s' % string)
 
@@ -436,8 +450,6 @@ def main(args):
   dp = 1e-6
   surface_nodes_plus_dp = boundary(p+dp)
   surface_tangents = surface_nodes_plus_dp - surface_nodes
-  #surface_tangents = (surface_nodes[range(1,args.boundary_nodes)+[0],:] - 
-  #                    surface_nodes[range(args.boundary_nodes),:])
   surface_normals = np.zeros((args.boundary_nodes,2))
   surface_normals[:,0] = surface_tangents[:,1]
   surface_normals[:,1] = -surface_tangents[:,0]
@@ -455,7 +467,6 @@ def main(args):
     pbuff = Point(p).buffer(n)
     D = D.difference(pbuff)
 
-  #D = D.buffer(-buffer_size)
   assert D.is_valid
 
   # Find interior nodes that are within the domain and adhere to the
@@ -464,7 +475,6 @@ def main(args):
   interior_idx = range(node_count,len(interior_nodes)+node_count)
   total_nodes = np.vstack((total_nodes,interior_nodes))
   node_count += len(interior_nodes)
-  #D = D.buffer(buffer_size)
   T.toc()
 
   T.tic('Material Properties')
@@ -480,7 +490,6 @@ def main(args):
   # lame parameters
   mu = (S_vel**2*rho) # kg/m*s**2
   lam = (P_vel**2*rho - 2*mu) # kg/m*s**2
-  
 
   # create interpolants. The interpolants are 1D with respect to 
   # depth
@@ -573,10 +582,7 @@ def main(args):
       last_save = itr+1
       alpha_list = []
 
-  # final save
-  #update_save(name,range(last_save,itr+1),alpha_list)
   T.toc()
-
   logger.info('view results with exec/PlotSeisRBF.py %s' % name)
 
 if __name__ == '__main__':

@@ -1,40 +1,46 @@
 #!/usr/bin/env python
-''' 
-user defined functions for SeisRBF.py
-'''
+#
+# User defined functions used by SeisRBF.py. The user should modify
+# these functions based on their problem specifications
+
 import numpy as np
-from shapely.geometry import LineString
 
 def initial_conditions(x):
   '''                            
-  Initial displacement an velocity field.          
+  Initial displacement an velocity field.
+
+  Parameters
+  ----------
+    x: array of points where the initial displacments and velocity 
+       field are to be output.  This is an (N,D) array where N is 
+       the number of points and D is the number of spatial dimensions
+
+  Returns
+  -------
+    u: displacement field
+    v: velocity field               
   '''
-  sig = 2000.0
-  N = len(x)
-  u = np.zeros(np.shape(x))
-  #c = (x[:,0]**2 + x[:,1]**2)
-  #a = 1.0/(2*sig**2*np.pi)
-  #r = np.sqrt(x[:,0]**2 + x[:,1]**2)
-  #theta = np.arctan2(x[:,1],x[:,0])
-  # compressional initial
-  #u[:,0] = np.exp(-(r/sig)**2)*np.cos(theta)
-  #u[:,1] = np.exp(-(r/sig)**2)*np.sin(theta)
-  #u[:,0] = np.exp(-(r/sig)**2)*np.cos(theta+np.pi/2)
-  #u[:,1] = np.exp(-(r/sig)**2)*np.sin(theta+np.pi/2)
-  v = np.zeros(np.shape(x))
+  u = np.zeros(np.shape(x)) # returns 0 for initial disp
+  v = np.zeros(np.shape(x)) # returns 0 for initial vel
   return u,v
+
 
 def source_time_function(t):
   '''         
-  a function describing the time history of the force 
+  Describes the time evolution of seismic moment
 
-  This function should be 1 as t goes to inf     
+  Parameters
+  ----------
+    t: scalar value of time
+
+  Returns
+  -------
+    The proportion of the seismic moment that has been released at 
+    the given time.  This value should be between 0 and 1 
   '''
-  if t < 2000.0:
-    return 1.0
+  out = 1.0 # all seismic moment is instantly released
+  return out 
 
-  else:
-    return 0.0
 
 def boundary(t):
   '''   
@@ -46,32 +52,29 @@ def boundary(t):
                                  
   Returns               
   -------               
-    coordinates of the boundary 
+    The coordinates of the boundary that correspond with the given
+    values of t.  The coordinates should make an full loop as t goes
+    from 0 to 1 
                              
   '''
-  
-  p = np.linspace(0,2*np.pi,1000)
-  x =  6371000*np.sin(p) # meters
-  y = -6371000*np.cos(p) # meters
-  curve = LineString(zip(x,y))
-  if hasattr(t,'__iter__'):
-    out = np.zeros((len(t),2))
-    for itr,val in enumerate(t):
-      out[itr] = np.array(curve.interpolate(val,normalized=True))
-
-  else:
-    out = np.array(curve.interpolate(t,normalized=True))
+  p = 2*np.pi*t
+  out = np.zeros((len(t),2))
+  out[:,0] =  6371000*np.sin(p) # The boundary is a circle with radius 
+  out[:,1] = -6371000*np.cos(p) # equal to that of the earth in meters
 
   return out
 
 def node_density(x):
   '''                           
   returns a value between 0 and 1 indicating the desired density
-  of nodes at the given points      
+  of nodes at the given points. This function corresponds to psi 
+  in my paper.      
                                       
   Parameters                         
   ----------                           
-    x: N by 2 array of coordinates            
+    x: Array of points where node density is to be given. This is an
+       N by D array, where N is the number of points and D is the 
+       number of spatial dimensions
                                                  
   Returns                                             
   -------                                          
@@ -96,11 +99,13 @@ def node_density(x):
                    0.7,
                    0.7]
 
-
-  R = np.sqrt(np.sum(x**2,1))
-  out = np.zeros(len(R))
+  R = np.sqrt(x[0]**2 + x[1]**2)
+  #R = np.sqrt(np.sum(x**2,1))
+  #out = np.zeros(len(R))
   for depths,density in zip(layer_depths,layer_density):
-    out[(R<=depths[0])&(R>depths[1])] = density
+    if (R<=depths[0]) & (R>depths[1]):
+      return density
 
-  return out
+  #out[(R<=depths[0])&(R>depths[1])] = density     
+  #return out
 

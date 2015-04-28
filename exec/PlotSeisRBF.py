@@ -63,7 +63,7 @@ def plot_interpolant(D,interp,x,title='',dim=1,ax=None,scatter=False):
 
   return ax
 
-def plot_record_section()
+def plot_record_section():
   pass
 
 parser = argparse.ArgumentParser(
