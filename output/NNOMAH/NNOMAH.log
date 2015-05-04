@@ -1,0 +1,672 @@
+05/01/2015 13:37:29 SeisRBF: [INFO] run name: NNOMAH
+05/01/2015 13:37:29 SeisRBF: [INFO] arguments: 
+    material_file:            material/PREM.txt
+    boundary_nodes:           200
+    name:                     NNOMAH
+    epsilon:                  1.0
+    save_interval:            10
+    couple_distance:          1000000.0
+    max_time:                 2000.0
+    time_step:                1.0
+    rbf:                      None
+    nodes:                    1000
+    epicenter:                [0.0, 0.0]
+    moment_tensor:            [0.0, 0.0, 1e+20]
+05/01/2015 13:37:29 misc: [INFO] timing Define Topology
+05/01/2015 13:37:33 misc: [INFO] elapsed time for Define Topology: 3.948 s
+05/01/2015 13:37:33 misc: [INFO] timing Material Properties
+05/01/2015 13:37:34 misc: [INFO] elapsed time for Material Properties: 257.5 ms
+05/01/2015 13:37:34 misc: [INFO] timing Form Problem Matrices
+05/01/2015 13:37:36 misc: [INFO] elapsed time for Form Problem Matrices: 2.056 s
+05/01/2015 13:37:36 SeisRBF: [INFO] minimum distance between nodes (h): 101.457 km
+05/01/2015 13:37:36 SeisRBF: [INFO] maximum wavespeed (c): 13.7166 km/s
+05/01/2015 13:37:36 SeisRBF: [INFO] time step size (t): 1 s
+05/01/2015 13:37:36 SeisRBF: [INFO] t*c/h: 0.135196
+05/01/2015 13:37:36 misc: [INFO] timing Time Stepping
+05/01/2015 13:37:36 SeisRBF: [INFO] saving model geometry in output/NNOMAH
+05/01/2015 13:37:36 SeisRBF: [INFO] starting time step 1 of 2000
+05/01/2015 13:37:36 misc: [INFO] elapsed time for Time Stepping: 444.7 ms
+05/01/2015 13:37:36 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:36 misc: [INFO] elapsed time for solve for alpha: 165 ms
+05/01/2015 13:37:36 SeisRBF: [INFO] starting time step 2 of 2000
+05/01/2015 13:37:36 misc: [INFO] elapsed time for solve for alpha: 197.1 ms
+05/01/2015 13:37:36 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 151.2 ms
+05/01/2015 13:37:37 SeisRBF: [INFO] starting time step 3 of 2000
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 182.4 ms
+05/01/2015 13:37:37 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 152.5 ms
+05/01/2015 13:37:37 SeisRBF: [INFO] starting time step 4 of 2000
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 182.1 ms
+05/01/2015 13:37:37 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 159.3 ms
+05/01/2015 13:37:37 SeisRBF: [INFO] starting time step 5 of 2000
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 188.8 ms
+05/01/2015 13:37:37 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 158.4 ms
+05/01/2015 13:37:37 SeisRBF: [INFO] starting time step 6 of 2000
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 188.1 ms
+05/01/2015 13:37:37 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 159 ms
+05/01/2015 13:37:37 SeisRBF: [INFO] starting time step 7 of 2000
+05/01/2015 13:37:37 misc: [INFO] elapsed time for solve for alpha: 189.5 ms
+05/01/2015 13:37:37 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 158.9 ms
+05/01/2015 13:37:38 SeisRBF: [INFO] starting time step 8 of 2000
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 191.4 ms
+05/01/2015 13:37:38 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 164.7 ms
+05/01/2015 13:37:38 SeisRBF: [INFO] starting time step 9 of 2000
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 194.7 ms
+05/01/2015 13:37:38 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 154.4 ms
+05/01/2015 13:37:38 SeisRBF: [INFO] starting time step 10 of 2000
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 184.1 ms
+05/01/2015 13:37:38 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 159.4 ms
+05/01/2015 13:37:38 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:38 SeisRBF: [INFO] starting time step 11 of 2000
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 252.9 ms
+05/01/2015 13:37:38 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 160.2 ms
+05/01/2015 13:37:38 SeisRBF: [INFO] starting time step 12 of 2000
+05/01/2015 13:37:38 misc: [INFO] elapsed time for solve for alpha: 191 ms
+05/01/2015 13:37:38 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 157 ms
+05/01/2015 13:37:39 SeisRBF: [INFO] starting time step 13 of 2000
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 186.7 ms
+05/01/2015 13:37:39 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 157.1 ms
+05/01/2015 13:37:39 SeisRBF: [INFO] starting time step 14 of 2000
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 187.4 ms
+05/01/2015 13:37:39 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 159.8 ms
+05/01/2015 13:37:39 SeisRBF: [INFO] starting time step 15 of 2000
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 192 ms
+05/01/2015 13:37:39 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 161.6 ms
+05/01/2015 13:37:39 SeisRBF: [INFO] starting time step 16 of 2000
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 193.8 ms
+05/01/2015 13:37:39 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 166.4 ms
+05/01/2015 13:37:39 SeisRBF: [INFO] starting time step 17 of 2000
+05/01/2015 13:37:39 misc: [INFO] elapsed time for solve for alpha: 198.5 ms
+05/01/2015 13:37:39 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 161.4 ms
+05/01/2015 13:37:40 SeisRBF: [INFO] starting time step 18 of 2000
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 193.5 ms
+05/01/2015 13:37:40 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 162.9 ms
+05/01/2015 13:37:40 SeisRBF: [INFO] starting time step 19 of 2000
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 194.9 ms
+05/01/2015 13:37:40 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 161.8 ms
+05/01/2015 13:37:40 SeisRBF: [INFO] starting time step 20 of 2000
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 191.5 ms
+05/01/2015 13:37:40 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 156.4 ms
+05/01/2015 13:37:40 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:40 SeisRBF: [INFO] starting time step 21 of 2000
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 199.3 ms
+05/01/2015 13:37:40 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 158.5 ms
+05/01/2015 13:37:40 SeisRBF: [INFO] starting time step 22 of 2000
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 190.6 ms
+05/01/2015 13:37:40 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:40 misc: [INFO] elapsed time for solve for alpha: 161 ms
+05/01/2015 13:37:40 SeisRBF: [INFO] starting time step 23 of 2000
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 190.7 ms
+05/01/2015 13:37:41 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 159.9 ms
+05/01/2015 13:37:41 SeisRBF: [INFO] starting time step 24 of 2000
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 189.5 ms
+05/01/2015 13:37:41 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 156.9 ms
+05/01/2015 13:37:41 SeisRBF: [INFO] starting time step 25 of 2000
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 192.3 ms
+05/01/2015 13:37:41 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 157.1 ms
+05/01/2015 13:37:41 SeisRBF: [INFO] starting time step 26 of 2000
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 186.8 ms
+05/01/2015 13:37:41 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 155.9 ms
+05/01/2015 13:37:41 SeisRBF: [INFO] starting time step 27 of 2000
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 185.4 ms
+05/01/2015 13:37:41 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 162.7 ms
+05/01/2015 13:37:41 SeisRBF: [INFO] starting time step 28 of 2000
+05/01/2015 13:37:41 misc: [INFO] elapsed time for solve for alpha: 192.5 ms
+05/01/2015 13:37:41 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 157.5 ms
+05/01/2015 13:37:42 SeisRBF: [INFO] starting time step 29 of 2000
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 189.6 ms
+05/01/2015 13:37:42 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 157.7 ms
+05/01/2015 13:37:42 SeisRBF: [INFO] starting time step 30 of 2000
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 187.6 ms
+05/01/2015 13:37:42 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 158.9 ms
+05/01/2015 13:37:42 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:42 SeisRBF: [INFO] starting time step 31 of 2000
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 196.1 ms
+05/01/2015 13:37:42 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 157.4 ms
+05/01/2015 13:37:42 SeisRBF: [INFO] starting time step 32 of 2000
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 187.3 ms
+05/01/2015 13:37:42 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 157.5 ms
+05/01/2015 13:37:42 SeisRBF: [INFO] starting time step 33 of 2000
+05/01/2015 13:37:42 misc: [INFO] elapsed time for solve for alpha: 187 ms
+05/01/2015 13:37:42 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 154 ms
+05/01/2015 13:37:43 SeisRBF: [INFO] starting time step 34 of 2000
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 183.8 ms
+05/01/2015 13:37:43 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 160.5 ms
+05/01/2015 13:37:43 SeisRBF: [INFO] starting time step 35 of 2000
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 190.3 ms
+05/01/2015 13:37:43 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 159.7 ms
+05/01/2015 13:37:43 SeisRBF: [INFO] starting time step 36 of 2000
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 189.2 ms
+05/01/2015 13:37:43 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 167.1 ms
+05/01/2015 13:37:43 SeisRBF: [INFO] starting time step 37 of 2000
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 197.7 ms
+05/01/2015 13:37:43 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 170.2 ms
+05/01/2015 13:37:43 SeisRBF: [INFO] starting time step 38 of 2000
+05/01/2015 13:37:43 misc: [INFO] elapsed time for solve for alpha: 201.3 ms
+05/01/2015 13:37:43 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 160 ms
+05/01/2015 13:37:44 SeisRBF: [INFO] starting time step 39 of 2000
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 189.8 ms
+05/01/2015 13:37:44 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 156.7 ms
+05/01/2015 13:37:44 SeisRBF: [INFO] starting time step 40 of 2000
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 192.8 ms
+05/01/2015 13:37:44 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 158.2 ms
+05/01/2015 13:37:44 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:44 SeisRBF: [INFO] starting time step 41 of 2000
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 195.3 ms
+05/01/2015 13:37:44 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 158 ms
+05/01/2015 13:37:44 SeisRBF: [INFO] starting time step 42 of 2000
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 187.7 ms
+05/01/2015 13:37:44 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 157.5 ms
+05/01/2015 13:37:44 SeisRBF: [INFO] starting time step 43 of 2000
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 187.1 ms
+05/01/2015 13:37:44 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:44 misc: [INFO] elapsed time for solve for alpha: 158.1 ms
+05/01/2015 13:37:44 SeisRBF: [INFO] starting time step 44 of 2000
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 190.1 ms
+05/01/2015 13:37:45 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 162.6 ms
+05/01/2015 13:37:45 SeisRBF: [INFO] starting time step 45 of 2000
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 192.3 ms
+05/01/2015 13:37:45 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 160 ms
+05/01/2015 13:37:45 SeisRBF: [INFO] starting time step 46 of 2000
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 190.1 ms
+05/01/2015 13:37:45 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 155 ms
+05/01/2015 13:37:45 SeisRBF: [INFO] starting time step 47 of 2000
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 184.7 ms
+05/01/2015 13:37:45 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 156.3 ms
+05/01/2015 13:37:45 SeisRBF: [INFO] starting time step 48 of 2000
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 185.9 ms
+05/01/2015 13:37:45 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 156.2 ms
+05/01/2015 13:37:45 SeisRBF: [INFO] starting time step 49 of 2000
+05/01/2015 13:37:45 misc: [INFO] elapsed time for solve for alpha: 186.1 ms
+05/01/2015 13:37:45 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 158.1 ms
+05/01/2015 13:37:46 SeisRBF: [INFO] starting time step 50 of 2000
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 187.6 ms
+05/01/2015 13:37:46 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 159.5 ms
+05/01/2015 13:37:46 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:46 SeisRBF: [INFO] starting time step 51 of 2000
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 196.7 ms
+05/01/2015 13:37:46 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 160.5 ms
+05/01/2015 13:37:46 SeisRBF: [INFO] starting time step 52 of 2000
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 192.5 ms
+05/01/2015 13:37:46 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 159.3 ms
+05/01/2015 13:37:46 SeisRBF: [INFO] starting time step 53 of 2000
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 189 ms
+05/01/2015 13:37:46 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 155.2 ms
+05/01/2015 13:37:46 SeisRBF: [INFO] starting time step 54 of 2000
+05/01/2015 13:37:46 misc: [INFO] elapsed time for solve for alpha: 184.9 ms
+05/01/2015 13:37:46 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 156.7 ms
+05/01/2015 13:37:47 SeisRBF: [INFO] starting time step 55 of 2000
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 186.2 ms
+05/01/2015 13:37:47 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 161 ms
+05/01/2015 13:37:47 SeisRBF: [INFO] starting time step 56 of 2000
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 196 ms
+05/01/2015 13:37:47 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 159.9 ms
+05/01/2015 13:37:47 SeisRBF: [INFO] starting time step 57 of 2000
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 189.7 ms
+05/01/2015 13:37:47 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 161.9 ms
+05/01/2015 13:37:47 SeisRBF: [INFO] starting time step 58 of 2000
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 191.8 ms
+05/01/2015 13:37:47 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 155.4 ms
+05/01/2015 13:37:47 SeisRBF: [INFO] starting time step 59 of 2000
+05/01/2015 13:37:47 misc: [INFO] elapsed time for solve for alpha: 185.4 ms
+05/01/2015 13:37:47 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 171 ms
+05/01/2015 13:37:48 SeisRBF: [INFO] starting time step 60 of 2000
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 202.8 ms
+05/01/2015 13:37:48 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 158.7 ms
+05/01/2015 13:37:48 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:48 SeisRBF: [INFO] starting time step 61 of 2000
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 198 ms
+05/01/2015 13:37:48 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 162 ms
+05/01/2015 13:37:48 SeisRBF: [INFO] starting time step 62 of 2000
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 191.7 ms
+05/01/2015 13:37:48 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 160.3 ms
+05/01/2015 13:37:48 SeisRBF: [INFO] starting time step 63 of 2000
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 190 ms
+05/01/2015 13:37:48 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 156.8 ms
+05/01/2015 13:37:48 SeisRBF: [INFO] starting time step 64 of 2000
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 187.1 ms
+05/01/2015 13:37:48 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:48 misc: [INFO] elapsed time for solve for alpha: 159.5 ms
+05/01/2015 13:37:48 SeisRBF: [INFO] starting time step 65 of 2000
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 194.4 ms
+05/01/2015 13:37:49 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 159.5 ms
+05/01/2015 13:37:49 SeisRBF: [INFO] starting time step 66 of 2000
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 189.4 ms
+05/01/2015 13:37:49 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 156.7 ms
+05/01/2015 13:37:49 SeisRBF: [INFO] starting time step 67 of 2000
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 186.3 ms
+05/01/2015 13:37:49 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 155.4 ms
+05/01/2015 13:37:49 SeisRBF: [INFO] starting time step 68 of 2000
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 185.1 ms
+05/01/2015 13:37:49 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 155.3 ms
+05/01/2015 13:37:49 SeisRBF: [INFO] starting time step 69 of 2000
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 187.4 ms
+05/01/2015 13:37:49 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 162.9 ms
+05/01/2015 13:37:49 SeisRBF: [INFO] starting time step 70 of 2000
+05/01/2015 13:37:49 misc: [INFO] elapsed time for solve for alpha: 192.5 ms
+05/01/2015 13:37:49 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 155 ms
+05/01/2015 13:37:50 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:50 SeisRBF: [INFO] starting time step 71 of 2000
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 194.2 ms
+05/01/2015 13:37:50 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 164.3 ms
+05/01/2015 13:37:50 SeisRBF: [INFO] starting time step 72 of 2000
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 194.1 ms
+05/01/2015 13:37:50 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 155.2 ms
+05/01/2015 13:37:50 SeisRBF: [INFO] starting time step 73 of 2000
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 184.8 ms
+05/01/2015 13:37:50 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 157.5 ms
+05/01/2015 13:37:50 SeisRBF: [INFO] starting time step 74 of 2000
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 187.6 ms
+05/01/2015 13:37:50 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 154.6 ms
+05/01/2015 13:37:50 SeisRBF: [INFO] starting time step 75 of 2000
+05/01/2015 13:37:50 misc: [INFO] elapsed time for solve for alpha: 184.3 ms
+05/01/2015 13:37:50 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 157.9 ms
+05/01/2015 13:37:51 SeisRBF: [INFO] starting time step 76 of 2000
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 187.5 ms
+05/01/2015 13:37:51 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 156.1 ms
+05/01/2015 13:37:51 SeisRBF: [INFO] starting time step 77 of 2000
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 188.1 ms
+05/01/2015 13:37:51 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 159.1 ms
+05/01/2015 13:37:51 SeisRBF: [INFO] starting time step 78 of 2000
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 191.1 ms
+05/01/2015 13:37:51 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 161.8 ms
+05/01/2015 13:37:51 SeisRBF: [INFO] starting time step 79 of 2000
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 191.4 ms
+05/01/2015 13:37:51 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 161.7 ms
+05/01/2015 13:37:51 SeisRBF: [INFO] starting time step 80 of 2000
+05/01/2015 13:37:51 misc: [INFO] elapsed time for solve for alpha: 196.9 ms
+05/01/2015 13:37:51 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 161.3 ms
+05/01/2015 13:37:52 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:52 SeisRBF: [INFO] starting time step 81 of 2000
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 199 ms
+05/01/2015 13:37:52 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 157.3 ms
+05/01/2015 13:37:52 SeisRBF: [INFO] starting time step 82 of 2000
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 186.9 ms
+05/01/2015 13:37:52 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 159.4 ms
+05/01/2015 13:37:52 SeisRBF: [INFO] starting time step 83 of 2000
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 196.1 ms
+05/01/2015 13:37:52 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 161.5 ms
+05/01/2015 13:37:52 SeisRBF: [INFO] starting time step 84 of 2000
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 193.6 ms
+05/01/2015 13:37:52 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 161 ms
+05/01/2015 13:37:52 SeisRBF: [INFO] starting time step 85 of 2000
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 191 ms
+05/01/2015 13:37:52 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:52 misc: [INFO] elapsed time for solve for alpha: 159.4 ms
+05/01/2015 13:37:52 SeisRBF: [INFO] starting time step 86 of 2000
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 189.1 ms
+05/01/2015 13:37:53 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 160.5 ms
+05/01/2015 13:37:53 SeisRBF: [INFO] starting time step 87 of 2000
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 190.1 ms
+05/01/2015 13:37:53 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 158.1 ms
+05/01/2015 13:37:53 SeisRBF: [INFO] starting time step 88 of 2000
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 188 ms
+05/01/2015 13:37:53 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 156.4 ms
+05/01/2015 13:37:53 SeisRBF: [INFO] starting time step 89 of 2000
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 186.7 ms
+05/01/2015 13:37:53 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 156.1 ms
+05/01/2015 13:37:53 SeisRBF: [INFO] starting time step 90 of 2000
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 187.7 ms
+05/01/2015 13:37:53 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 164.6 ms
+05/01/2015 13:37:53 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:53 SeisRBF: [INFO] starting time step 91 of 2000
+05/01/2015 13:37:53 misc: [INFO] elapsed time for solve for alpha: 203.8 ms
+05/01/2015 13:37:53 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 160.9 ms
+05/01/2015 13:37:54 SeisRBF: [INFO] starting time step 92 of 2000
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 190.5 ms
+05/01/2015 13:37:54 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 160.3 ms
+05/01/2015 13:37:54 SeisRBF: [INFO] starting time step 93 of 2000
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 190 ms
+05/01/2015 13:37:54 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 157.3 ms
+05/01/2015 13:37:54 SeisRBF: [INFO] starting time step 94 of 2000
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 189.4 ms
+05/01/2015 13:37:54 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 164.1 ms
+05/01/2015 13:37:54 SeisRBF: [INFO] starting time step 95 of 2000
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 194.2 ms
+05/01/2015 13:37:54 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 155.8 ms
+05/01/2015 13:37:54 SeisRBF: [INFO] starting time step 96 of 2000
+05/01/2015 13:37:54 misc: [INFO] elapsed time for solve for alpha: 186 ms
+05/01/2015 13:37:54 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 157.8 ms
+05/01/2015 13:37:55 SeisRBF: [INFO] starting time step 97 of 2000
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 187.4 ms
+05/01/2015 13:37:55 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 158.3 ms
+05/01/2015 13:37:55 SeisRBF: [INFO] starting time step 98 of 2000
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 188 ms
+05/01/2015 13:37:55 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 157.9 ms
+05/01/2015 13:37:55 SeisRBF: [INFO] starting time step 99 of 2000
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 187.9 ms
+05/01/2015 13:37:55 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 157.6 ms
+05/01/2015 13:37:55 SeisRBF: [INFO] starting time step 100 of 2000
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 187.2 ms
+05/01/2015 13:37:55 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 156 ms
+05/01/2015 13:37:55 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:55 SeisRBF: [INFO] starting time step 101 of 2000
+05/01/2015 13:37:55 misc: [INFO] elapsed time for solve for alpha: 192.8 ms
+05/01/2015 13:37:55 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 158.8 ms
+05/01/2015 13:37:56 SeisRBF: [INFO] starting time step 102 of 2000
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 188.7 ms
+05/01/2015 13:37:56 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 162 ms
+05/01/2015 13:37:56 SeisRBF: [INFO] starting time step 103 of 2000
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 194.3 ms
+05/01/2015 13:37:56 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 158.3 ms
+05/01/2015 13:37:56 SeisRBF: [INFO] starting time step 104 of 2000
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 188.2 ms
+05/01/2015 13:37:56 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 158 ms
+05/01/2015 13:37:56 SeisRBF: [INFO] starting time step 105 of 2000
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 187.6 ms
+05/01/2015 13:37:56 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 157.1 ms
+05/01/2015 13:37:56 SeisRBF: [INFO] starting time step 106 of 2000
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 186.7 ms
+05/01/2015 13:37:56 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:56 misc: [INFO] elapsed time for solve for alpha: 161.6 ms
+05/01/2015 13:37:56 SeisRBF: [INFO] starting time step 107 of 2000
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 191.3 ms
+05/01/2015 13:37:57 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 161.6 ms
+05/01/2015 13:37:57 SeisRBF: [INFO] starting time step 108 of 2000
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 191.2 ms
+05/01/2015 13:37:57 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 158.3 ms
+05/01/2015 13:37:57 SeisRBF: [INFO] starting time step 109 of 2000
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 188 ms
+05/01/2015 13:37:57 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 157.6 ms
+05/01/2015 13:37:57 SeisRBF: [INFO] starting time step 110 of 2000
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 187.2 ms
+05/01/2015 13:37:57 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 158.5 ms
+05/01/2015 13:37:57 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:57 SeisRBF: [INFO] starting time step 111 of 2000
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 197.3 ms
+05/01/2015 13:37:57 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 164.6 ms
+05/01/2015 13:37:57 SeisRBF: [INFO] starting time step 112 of 2000
+05/01/2015 13:37:57 misc: [INFO] elapsed time for solve for alpha: 196.7 ms
+05/01/2015 13:37:57 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 163.3 ms
+05/01/2015 13:37:58 SeisRBF: [INFO] starting time step 113 of 2000
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 193.1 ms
+05/01/2015 13:37:58 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 156.7 ms
+05/01/2015 13:37:58 SeisRBF: [INFO] starting time step 114 of 2000
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 188.8 ms
+05/01/2015 13:37:58 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 160.7 ms
+05/01/2015 13:37:58 SeisRBF: [INFO] starting time step 115 of 2000
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 190.3 ms
+05/01/2015 13:37:58 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 156.9 ms
+05/01/2015 13:37:58 SeisRBF: [INFO] starting time step 116 of 2000
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 188.9 ms
+05/01/2015 13:37:58 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 160.8 ms
+05/01/2015 13:37:58 SeisRBF: [INFO] starting time step 117 of 2000
+05/01/2015 13:37:58 misc: [INFO] elapsed time for solve for alpha: 192.9 ms
+05/01/2015 13:37:58 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 163.9 ms
+05/01/2015 13:37:59 SeisRBF: [INFO] starting time step 118 of 2000
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 193.9 ms
+05/01/2015 13:37:59 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 159.6 ms
+05/01/2015 13:37:59 SeisRBF: [INFO] starting time step 119 of 2000
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 191.5 ms
+05/01/2015 13:37:59 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 163.1 ms
+05/01/2015 13:37:59 SeisRBF: [INFO] starting time step 120 of 2000
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 198.6 ms
+05/01/2015 13:37:59 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 157.5 ms
+05/01/2015 13:37:59 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:37:59 SeisRBF: [INFO] starting time step 121 of 2000
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 194.4 ms
+05/01/2015 13:37:59 misc: [INFO] timing solve for alpha
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 159.1 ms
+05/01/2015 13:37:59 SeisRBF: [INFO] starting time step 122 of 2000
+05/01/2015 13:37:59 misc: [INFO] elapsed time for solve for alpha: 188.7 ms
+05/01/2015 13:37:59 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 159.5 ms
+05/01/2015 13:38:00 SeisRBF: [INFO] starting time step 123 of 2000
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 191.6 ms
+05/01/2015 13:38:00 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 161.7 ms
+05/01/2015 13:38:00 SeisRBF: [INFO] starting time step 124 of 2000
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 201.5 ms
+05/01/2015 13:38:00 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 158.3 ms
+05/01/2015 13:38:00 SeisRBF: [INFO] starting time step 125 of 2000
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 188 ms
+05/01/2015 13:38:00 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 161.6 ms
+05/01/2015 13:38:00 SeisRBF: [INFO] starting time step 126 of 2000
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 191.4 ms
+05/01/2015 13:38:00 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 160.1 ms
+05/01/2015 13:38:00 SeisRBF: [INFO] starting time step 127 of 2000
+05/01/2015 13:38:00 misc: [INFO] elapsed time for solve for alpha: 189.7 ms
+05/01/2015 13:38:00 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 157.6 ms
+05/01/2015 13:38:01 SeisRBF: [INFO] starting time step 128 of 2000
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 188.4 ms
+05/01/2015 13:38:01 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 158.7 ms
+05/01/2015 13:38:01 SeisRBF: [INFO] starting time step 129 of 2000
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 190.8 ms
+05/01/2015 13:38:01 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 163 ms
+05/01/2015 13:38:01 SeisRBF: [INFO] starting time step 130 of 2000
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 192.8 ms
+05/01/2015 13:38:01 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 158.3 ms
+05/01/2015 13:38:01 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:38:01 SeisRBF: [INFO] starting time step 131 of 2000
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 194.9 ms
+05/01/2015 13:38:01 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 160.1 ms
+05/01/2015 13:38:01 SeisRBF: [INFO] starting time step 132 of 2000
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 189.8 ms
+05/01/2015 13:38:01 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:01 misc: [INFO] elapsed time for solve for alpha: 159 ms
+05/01/2015 13:38:01 SeisRBF: [INFO] starting time step 133 of 2000
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 193.8 ms
+05/01/2015 13:38:02 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 159.9 ms
+05/01/2015 13:38:02 SeisRBF: [INFO] starting time step 134 of 2000
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 192.1 ms
+05/01/2015 13:38:02 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 163.7 ms
+05/01/2015 13:38:02 SeisRBF: [INFO] starting time step 135 of 2000
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 193.7 ms
+05/01/2015 13:38:02 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 161 ms
+05/01/2015 13:38:02 SeisRBF: [INFO] starting time step 136 of 2000
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 191.1 ms
+05/01/2015 13:38:02 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 158.6 ms
+05/01/2015 13:38:02 SeisRBF: [INFO] starting time step 137 of 2000
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 195.5 ms
+05/01/2015 13:38:02 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 160.9 ms
+05/01/2015 13:38:02 SeisRBF: [INFO] starting time step 138 of 2000
+05/01/2015 13:38:02 misc: [INFO] elapsed time for solve for alpha: 190.6 ms
+05/01/2015 13:38:02 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 162.1 ms
+05/01/2015 13:38:03 SeisRBF: [INFO] starting time step 139 of 2000
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 191.7 ms
+05/01/2015 13:38:03 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 156.8 ms
+05/01/2015 13:38:03 SeisRBF: [INFO] starting time step 140 of 2000
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 188.9 ms
+05/01/2015 13:38:03 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 159.9 ms
+05/01/2015 13:38:03 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:38:03 SeisRBF: [INFO] starting time step 141 of 2000
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 197.3 ms
+05/01/2015 13:38:03 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 159.9 ms
+05/01/2015 13:38:03 SeisRBF: [INFO] starting time step 142 of 2000
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 189.5 ms
+05/01/2015 13:38:03 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 157.9 ms
+05/01/2015 13:38:03 SeisRBF: [INFO] starting time step 143 of 2000
+05/01/2015 13:38:03 misc: [INFO] elapsed time for solve for alpha: 187.6 ms
+05/01/2015 13:38:03 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 157.4 ms
+05/01/2015 13:38:04 SeisRBF: [INFO] starting time step 144 of 2000
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 189.5 ms
+05/01/2015 13:38:04 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 160 ms
+05/01/2015 13:38:04 SeisRBF: [INFO] starting time step 145 of 2000
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 192 ms
+05/01/2015 13:38:04 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 163.9 ms
+05/01/2015 13:38:04 SeisRBF: [INFO] starting time step 146 of 2000
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 193.6 ms
+05/01/2015 13:38:04 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 161.2 ms
+05/01/2015 13:38:04 SeisRBF: [INFO] starting time step 147 of 2000
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 191.1 ms
+05/01/2015 13:38:04 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 157.5 ms
+05/01/2015 13:38:04 SeisRBF: [INFO] starting time step 148 of 2000
+05/01/2015 13:38:04 misc: [INFO] elapsed time for solve for alpha: 188.2 ms
+05/01/2015 13:38:04 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 161.8 ms
+05/01/2015 13:38:05 SeisRBF: [INFO] starting time step 149 of 2000
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 192.2 ms
+05/01/2015 13:38:05 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 160.7 ms
+05/01/2015 13:38:05 SeisRBF: [INFO] starting time step 150 of 2000
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 191.3 ms
+05/01/2015 13:38:05 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 160.7 ms
+05/01/2015 13:38:05 SeisRBF: [INFO] saving coefficients in output/NNOMAH
+05/01/2015 13:38:05 SeisRBF: [INFO] starting time step 151 of 2000
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 199.1 ms
+05/01/2015 13:38:05 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 162.6 ms
+05/01/2015 13:38:05 SeisRBF: [INFO] starting time step 152 of 2000
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 194.7 ms
+05/01/2015 13:38:05 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 165.4 ms
+05/01/2015 13:38:05 SeisRBF: [INFO] starting time step 153 of 2000
+05/01/2015 13:38:05 misc: [INFO] elapsed time for solve for alpha: 197.7 ms
+05/01/2015 13:38:05 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 161.6 ms
+05/01/2015 13:38:06 SeisRBF: [INFO] starting time step 154 of 2000
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 191.7 ms
+05/01/2015 13:38:06 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 157.5 ms
+05/01/2015 13:38:06 SeisRBF: [INFO] starting time step 155 of 2000
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 189.3 ms
+05/01/2015 13:38:06 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 163.5 ms
+05/01/2015 13:38:06 SeisRBF: [INFO] starting time step 156 of 2000
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 193.5 ms
+05/01/2015 13:38:06 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 160.7 ms
+05/01/2015 13:38:06 SeisRBF: [INFO] starting time step 157 of 2000
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 192.8 ms
+05/01/2015 13:38:06 misc: [INFO] timing solve for alpha
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 161.5 ms
+05/01/2015 13:38:06 SeisRBF: [INFO] starting time step 158 of 2000
+05/01/2015 13:38:06 misc: [INFO] elapsed time for solve for alpha: 193.6 ms
+05/01/2015 13:38:06 misc: [INFO] timing solve for alpha

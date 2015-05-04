@@ -332,6 +332,12 @@ def pick_nodes(H,D,R,N):
 
 def F(u,J,H,f,BCidx,BCval): 
   '''
+  This needs to be redone completely
+
+  The goal is to find acceleration
+
+
+
   computes acceleration from u.  This is done by first finding the 
   spectral coefficients from u and then using the spectral 
   coefficients to evaluate the derivative. The matrix J is the 
@@ -514,10 +520,40 @@ def main(args):
 
   # Form interpolation, acceleration, and boundary condition matrix
   G = interpolation_matrix(total_nodes,total_nodes,eps)
-  A = acceleration_matrix(total_nodes,total_nodes,eps,lam_itp,mu_itp,rho_itp)
-  B = traction_matrix(surface_nodes,surface_normals,total_nodes,eps,lam_itp,mu_itp)/1e8
+  H = acceleration_matrix(total_nodes,total_nodes,eps,lam_itp,mu_itp,rho_itp)
+  B = traction_matrix(surface_nodes,surface_normals,total_nodes,eps,lam_itp,mu_itp)
   G[surface_idx,:,:,:] = B
+
+
+  N = len(total_nodes)
+  Gflat = np.reshape(G,(N,2,2*N))
+  Gflat = np.einsum('ijk->kij',Gflat)
+  Gflat = np.reshape(Gflat,(2*N,2*N))
+  Gflat = np.einsum('ij->ji',Gflat)
+  Gflat_inv = np.linalg.inv(Gflat)
+  # uflat = Gflat*alphaflat
+
+  Hflat = np.reshape(H,(N,2,2*N))
+  Hflat = np.einsum('ijk->kij',Hflat)
+  Hflat = np.reshape(Hflat,(2*N,2*N))
+  Hflat = np.einsum('ij->ji',Hflat)
+
+  Aflat = np.einsum('ij,jk',Hflat,Gflat_inv)
+  A = np.reshape(Aflat,(2*N,N,2))
+  A = np.einsum('ijk->jki',A)
+  A = np.reshape(A,(N,2,N,2))
+  A = np.einsum('ijkl->klij',A)
+
   T.toc()
+
+  #a = (N,2)
+  #alpha = (M,2)
+  #u = (N,2)
+  #F = (N,2,M,2)
+  #G^-1 = (M,2,N,2)  
+  #F*G^-1 = (N,2,N,2)
+  
+  #a = F*G^-1*u + f 
 
   # Print Run Information
   # ---------------------

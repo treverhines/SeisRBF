@@ -1,0 +1,19 @@
+05/01/2015 14:29:08 SeisRBF: [INFO] run name: NNOOOK
+05/01/2015 14:29:08 SeisRBF: [INFO] arguments: 
+    material_file:            material/PREM.txt
+    boundary_nodes:           200
+    name:                     NNOOOK
+    epsilon:                  1.0
+    save_interval:            10
+    couple_distance:          1000000.0
+    max_time:                 2000.0
+    time_step:                1.0
+    rbf:                      None
+    nodes:                    1000
+    epicenter:                [0.0, 0.0]
+    moment_tensor:            [0.0, 0.0, 1e+20]
+05/01/2015 14:29:08 misc: [INFO] timing Define Topology
+05/01/2015 14:29:12 misc: [INFO] elapsed time for Define Topology: 3.947 s
+05/01/2015 14:29:12 misc: [INFO] timing Material Properties
+05/01/2015 14:29:12 misc: [INFO] elapsed time for Material Properties: 270.9 ms
+05/01/2015 14:29:12 misc: [INFO] timing Form Problem Matrices
